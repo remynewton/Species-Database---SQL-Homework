@@ -5,5 +5,5 @@ import com.laba.solvd.Species.domain.Habitats;
 import java.sql.SQLException;
 
 public interface HabitatsRepository {
-    void create (Habitats habitats) throws SQLException, ClassNotFoundException;
+    void create (Habitats habitats);
 }

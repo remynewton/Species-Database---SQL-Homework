@@ -1,61 +1,117 @@
 package com.laba.solvd.Species.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class Species {
     private int id;
     private String commonName;
     private String scientificName;
-    ConservationStatuses conservationStatus = new ConservationStatuses();
-    private int conservationStatusID;
-    Taxonomies taxonomy = new Taxonomies();
-    private String[] taxonomyList = {taxonomy.getKingdom()[1], taxonomy.getItsClass()[1], taxonomy.getFamily()[1]};
+    private List<References> references = new ArrayList<>();
+    private List<Images> images = new ArrayList<>();
+    private List<Locations> locations = new ArrayList<>();
+    private List<Characteristics> characteristics = new ArrayList<>();
+    ConservationStatuses conservationStatus;
+    Families family;
 
-    public Species(int id, String commonName, String scientificName, int conservationStatusID, String[] taxonomyList) {
+    public Species(int id, String commonName, String scientificName, List<References> references, List<Images> images, List<Locations> locations, List<Characteristics> characteristics, ConservationStatuses conservationStatus, Families family) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
-        this.conservationStatusID = conservationStatus.getId();
-        this.taxonomyList = taxonomyList;
+        this.references = references;
+        this.images = images;
+        this.locations = locations;
+        this.characteristics = characteristics;
+        this.conservationStatus = conservationStatus;
+        this.family = family;
     }
 
     public Species() {
     }
 
-    public String getCommonName() {
-        return commonName;
-    }
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
-    }
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getCommonName() {
+        return commonName;
+    }
+
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
+
     public String getScientificName() {
         return scientificName;
     }
+
     public void setScientificName(String scientificName) {
         this.scientificName = scientificName;
     }
 
-    public String[] getTaxonomy() {
-        return taxonomyList;
+    public List<References> getReferences() {
+        return references;
     }
 
-    public int getFamilyID() {
-        return Integer.valueOf(taxonomy.getFamily()[0]);
+    public void setReferences(List<References> references) {
+        this.references = references;
     }
 
-    public void setTaxonomy(String[] taxonomyList) {
-        this.taxonomyList = taxonomyList;
+    public List<Images> getImages() {
+        return images;
     }
 
-    public int getConservationStatusID() {
-        return conservationStatusID;
+    public void setImages(List<Images> images) {
+        this.images = images;
     }
 
-    public void setConservationStatusID(int conservationStatusID) {
-        this.conservationStatusID = conservationStatus.getId();
+    public List<Locations> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Locations> locations) {
+        this.locations = locations;
+    }
+
+    public List<Characteristics> getCharacteristics() {
+        return characteristics;
+    }
+
+    public void setCharacteristics(List<Characteristics> characteristics) {
+        this.characteristics = characteristics;
+    }
+
+    public ConservationStatuses getConservationStatus() {
+        return conservationStatus;
+    }
+
+    public void setConservationStatus(ConservationStatuses conservationStatus) {
+        this.conservationStatus = conservationStatus;
+    }
+
+    public Families getFamily() {
+        return family;
+    }
+
+    public void setFamily(Families family) {
+        this.family = family;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Species species = (Species) o;
+        return id == species.id && Objects.equals(commonName, species.commonName) && Objects.equals(scientificName, species.scientificName) && Objects.equals(references, species.references) && Objects.equals(images, species.images) && Objects.equals(locations, species.locations) && Objects.equals(characteristics, species.characteristics) && Objects.equals(conservationStatus, species.conservationStatus) && Objects.equals(family, species.family);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, commonName, scientificName, references, images, locations, characteristics, conservationStatus, family);
     }
 }

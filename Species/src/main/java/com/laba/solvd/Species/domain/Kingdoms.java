@@ -1,28 +1,22 @@
 package com.laba.solvd.Species.domain;
 
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Habitats {
+public class Kingdoms {
     private int id;
     private String name;
-    private ArrayList<Locations> locations;
+    private List<Classes> classes = new ArrayList<>();
 
-    public Habitats(int id, String name, ArrayList<Locations> locations) {
+    public Kingdoms(int id, String name, List<Classes> classes) {
         this.id = id;
         this.name = name;
-        this.locations = locations;
+        this.classes = classes;
     }
 
-    public Habitats() {
-    }
-
-    public ArrayList<Locations> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(ArrayList<Locations> locations) {
-        this.locations = locations;
+    public Kingdoms() {
     }
 
     public int getId() {
@@ -41,16 +35,24 @@ public class Habitats {
         this.name = name;
     }
 
+    public List<Classes> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<Classes> classes) {
+        this.classes = classes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Habitats habitats = (Habitats) o;
-        return id == habitats.id && Objects.equals(name, habitats.name) && Objects.equals(locations, habitats.locations);
+        Kingdoms kingdoms = (Kingdoms) o;
+        return id == kingdoms.id && Objects.equals(name, kingdoms.name) && Objects.equals(classes, kingdoms.classes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, locations);
+        return Objects.hash(id, name, classes);
     }
 }

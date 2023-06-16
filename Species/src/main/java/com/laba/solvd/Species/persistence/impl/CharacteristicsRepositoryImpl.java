@@ -11,76 +11,100 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class CharacteristicsRepositoryImpl implements CharacteristicsRepository {
-    private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private static final ConnectionPool CONNECTION_POOL;
 
-    @Override
-    public void create(Characteristics characteristic) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        String sql = "INSERT INTO characteristics (id, name, category) VALUES (?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, characteristic.getId());
-        ps.setString(2, characteristic.getName());
-        ps.setString(3, characteristic.getCategory());
-        ps.executeUpdate();
-        ps.close();
-        CONNECTION_POOL.releaseConnection(connection);
-    }
-
-    @Override
-    public void update(Characteristics characteristic) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        String sql = "UPDATE characteristics SET id = ?, name = ?, category = ? WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, characteristic.getId());
-        ps.setString(2, characteristic.getName());
-        ps.setString(3, characteristic.getCategory());
-        ps.executeUpdate();
-        ps.close();
-        CONNECTION_POOL.releaseConnection(connection);
-    }
-
-    @Override
-    public Optional<Characteristics> findByCategory(String category) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        Characteristics characteristic = null;
-        String sql = "SELECT id, name, category FROM characteristics WHERE category = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(3, category);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            String category1 = rs.getString("category");
-            characteristic = new Characteristics(id, name, category1);
+    static {
+        try {
+            CONNECTION_POOL = ConnectionPool.getInstance();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.ofNullable(characteristic);
     }
 
     @Override
-    public Optional<Characteristics> findByID(int id) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        Characteristics characteristic = null;
-        String sql = "SELECT id, name, category FROM characteristics WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int oid = rs.getInt("id");
-            String name = rs.getString("name");
-            String category = rs.getString("category");
-            characteristic = new Characteristics(oid, name, category);
+    public void create(Characteristics characteristic) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "INSERT INTO characteristics (id, name, category) VALUES (?, ?, ?)")
+        ) {
+            ps.setInt(1, characteristic.getId());
+            ps.setString(2, characteristic.getName());
+            ps.setString(3, characteristic.getCategory());
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return Optional.ofNullable(characteristic);
     }
 
     @Override
-    public void deleteByID(int id) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        String sql = "DELETE FROM characteristics WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ps.executeUpdate();
-        ps.close();
-        CONNECTION_POOL.releaseConnection(connection);
+    public void update(Characteristics characteristic) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "UPDATE characteristics SET name = ?, category = ? WHERE id = ?")
+        ) {
+            ps.setString(1, characteristic.getName());
+            ps.setString(2, characteristic.getCategory());
+            ps.setInt(3, characteristic.getId());
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Optional<Characteristics> findByCategory(String category) {
+        Characteristics characteristic = null;
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "SELECT id, name, category FROM characteristics WHERE category = ?")
+        ) {
+            ps.setString(1, category);
+            ResultSet rs = ps.executeQuery();
+            characteristic = null;
+            if (rs.next()) {
+                characteristic = new Characteristics();
+                characteristic.setId(rs.getInt("id"));
+                characteristic.setName(rs.getString("name"));
+                characteristic.setCategory(rs.getString("category"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Optional.of(characteristic);
+    }
+
+    @Override
+    public Optional<Characteristics> findByID(int id) {
+        Characteristics characteristic = null;
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "SELECT id, name, category FROM characteristics WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            characteristic = null;
+            if (rs.next()) {
+                characteristic = new Characteristics();
+                characteristic.setId(rs.getInt("id"));
+                characteristic.setName(rs.getString("name"));
+                characteristic.setCategory(rs.getString("category"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Optional.of(characteristic);
+    }
+
+    @Override
+    public void deleteByID(int id) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "DELETE FROM characteristics WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

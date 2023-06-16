@@ -12,12 +12,12 @@ public class ConnectionPool {
     private int currentPoolSize;
     private static ConnectionPool instance;
 
-    private ConnectionPool() {
+    private ConnectionPool() throws SQLException, ClassNotFoundException {
         connections = new ArrayList<>();
-        currentPoolSize = 0;
+        initializePool();
     }
 
-    public static synchronized ConnectionPool getInstance() {
+    public static synchronized ConnectionPool getInstance() throws SQLException, ClassNotFoundException {
         if (instance == null) {
             instance = new ConnectionPool();
         }
@@ -26,11 +26,11 @@ public class ConnectionPool {
 
     public synchronized Connection getConnection() throws SQLException, ClassNotFoundException {
         if (connections.isEmpty()) {
-            if (currentPoolSize < MAX_POOL_SIZE) {
+            if (currentPoolSize <= MAX_POOL_SIZE) {
                 Connection connection = createConnection();
                 if (connection != null) {
-                    connections.add(connection);
                     currentPoolSize++;
+                    return connection;
                 }
             } else {
                 throw new SQLException("Connection pool is full!");
@@ -39,21 +39,20 @@ public class ConnectionPool {
         return connections.remove(0);
     }
 
-    public synchronized void releaseConnection(Connection connection) throws SQLException {
-        if (currentPoolSize < MAX_POOL_SIZE) {
-            connections.add(connection);
-            currentPoolSize++;
-        } else {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new SQLException("Could not release connection");
-            }
-        }
+    public synchronized void releaseConnection(Connection connection) {
+        connections.add(connection);
+        connections.notifyAll();
     }
 
     private Connection createConnection() throws SQLException, ClassNotFoundException {
         Class.forName(Config.DRIVER.getValue());
         return DriverManager.getConnection(Config.URL.getValue(), Config.USERNAME.getValue(), Config.PASSWORD.getValue());
+    }
+
+    private void initializePool() throws SQLException, ClassNotFoundException {
+        for (int i = 0; i < MAX_POOL_SIZE; i++) {
+            connections.add(createConnection());
+            currentPoolSize++;
+        }
     }
 }

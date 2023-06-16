@@ -11,48 +11,68 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ImagesRepositoryImpl implements ImagesRepository {
-    private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
+    private static final ConnectionPool CONNECTION_POOL;
 
-    @Override
-    public void create(Images image) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        String sql = "INSERT INTO images (id, url, format) VALUES (?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, image.getId());
-        ps.setString(2, image.getUrl());
-        ps.setString(3, image.getFormat());
-        ps.executeUpdate();
-        ps.close();
-        CONNECTION_POOL.releaseConnection(connection);
-    }
-
-    @Override
-    public void update(Images image) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        String sql = "UPDATE images SET id = ?, url = ?, format = ? WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, image.getId());
-        ps.setString(2, image.getUrl());
-        ps.setString(3, image.getFormat());
-        ps.executeUpdate();
-        ps.close();
-        CONNECTION_POOL.releaseConnection(connection);
-    }
-
-    @Override
-    public Optional<Images> findByID(int id) throws SQLException, ClassNotFoundException {
-        Connection connection = CONNECTION_POOL.getConnection();
-        Images image = null;
-        String sql = "SELECT id, url, format FROM images WHERE id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int oid = rs.getInt("id");
-            String url = rs.getString("url");
-            String format = rs.getString("format");
-            image = new Images(oid, url, format);
+    static {
+        try {
+            CONNECTION_POOL = ConnectionPool.getInstance();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return Optional.ofNullable(image);
+    }
+
+    @Override
+    public void create(Images image) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "INSERT INTO images (id, url, format) VALUES (?, ?, ?)");
+        ) {
+            ps.setInt(1, image.getId());
+            ps.setString(2, image.getUrl());
+            ps.setString(3, image.getFormat());
+            ps.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(Images image) {
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "UPDATE images SET id = ?, url = ?, format = ? WHERE id = ?");
+        ) {
+            ps.setInt(1, image.getId());
+            ps.setString(2, image.getUrl());
+            ps.setString(3, image.getFormat());
+            ps.executeUpdate();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Optional<Images> findByID(int id) {
+        Images image = null;
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "SELECT id, url, format FROM images WHERE id = ?");
+        ) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            String url = null;
+            String format = null;
+            int oid = 0;
+            image = null;
+            if (rs.next()) {
+                image = new Images();
+                image.setId(rs.getInt("id"));
+                image.setUrl(rs.getString("url"));
+                image.setFormat(rs.getString("format"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Optional.of(image);
     }
 }
