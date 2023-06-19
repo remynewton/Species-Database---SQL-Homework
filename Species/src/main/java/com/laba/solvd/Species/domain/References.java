@@ -10,14 +10,12 @@ public class References {
     private String title;
     private String author;
     private Date date;
-    private List<Species> species;
 
-    public References(int id, String title, String author, Date date, List<Species> species) {
+    public References(int id, String title, String author, Date date) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.date = date;
-        this.species = species;
     }
 
     public References() {
@@ -55,24 +53,16 @@ public class References {
         this.date = date;
     }
 
-    public List<Species> getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(List<Species> species) {
-        this.species = species;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         References that = (References) o;
-        return id == that.id && Objects.equals(title, that.title) && Objects.equals(author, that.author) && Objects.equals(date, that.date) && Objects.equals(species, that.species);
+        return id == that.id && Objects.equals(title, that.title) && Objects.equals(author, that.author) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, date, species);
+        return Objects.hash(id, title, author, date);
     }
 }

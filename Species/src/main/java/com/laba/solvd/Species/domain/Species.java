@@ -10,18 +10,16 @@ public class Species {
     private String scientificName;
     private List<References> references;
     private List<Images> images;
-    private List<Locations> locations;
     private List<Characteristics> characteristics;
     ConservationStatuses conservationStatus;
     Families family;
 
-    public Species(int id, String commonName, String scientificName, List<References> references, List<Images> images, List<Locations> locations, List<Characteristics> characteristics, ConservationStatuses conservationStatus, Families family) {
+    public Species(int id, String commonName, String scientificName, List<References> references, List<Images> images, List<Characteristics> characteristics, ConservationStatuses conservationStatus, Families family) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.references = references;
         this.images = images;
-        this.locations = locations;
         this.characteristics = characteristics;
         this.conservationStatus = conservationStatus;
         this.family = family;
@@ -70,14 +68,6 @@ public class Species {
         this.images = images;
     }
 
-    public List<Locations> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(List<Locations> locations) {
-        this.locations = locations;
-    }
-
     public List<Characteristics> getCharacteristics() {
         return characteristics;
     }
@@ -107,11 +97,11 @@ public class Species {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Species species = (Species) o;
-        return id == species.id && Objects.equals(commonName, species.commonName) && Objects.equals(scientificName, species.scientificName) && Objects.equals(references, species.references) && Objects.equals(images, species.images) && Objects.equals(locations, species.locations) && Objects.equals(characteristics, species.characteristics) && Objects.equals(conservationStatus, species.conservationStatus) && Objects.equals(family, species.family);
+        return id == species.id && Objects.equals(commonName, species.commonName) && Objects.equals(scientificName, species.scientificName) && Objects.equals(references, species.references) && Objects.equals(images, species.images) && Objects.equals(characteristics, species.characteristics) && Objects.equals(conservationStatus, species.conservationStatus) && Objects.equals(family, species.family);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, commonName, scientificName, references, images, locations, characteristics, conservationStatus, family);
+        return Objects.hash(id, commonName, scientificName, references, images, characteristics, conservationStatus, family);
     }
 }

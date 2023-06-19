@@ -8,13 +8,11 @@ public class Images {
     private int id;
     private String url;
     private String format;
-    private List<Species> species;
 
-    public Images(int id, String url, String format, List<Species> species) {
+    public Images(int id, String url, String format) {
         this.id = id;
         this.url = url;
         this.format = format;
-        this.species = species;
     }
 
     public Images() {
@@ -44,24 +42,16 @@ public class Images {
         this.format = format;
     }
 
-    public List<Species> getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(List<Species> species) {
-        this.species = species;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Images images = (Images) o;
-        return id == images.id && Objects.equals(url, images.url) && Objects.equals(format, images.format) && Objects.equals(species, images.species);
+        return id == images.id && Objects.equals(url, images.url) && Objects.equals(format, images.format);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, url, format, species);
+        return Objects.hash(id, url, format);
     }
 }
