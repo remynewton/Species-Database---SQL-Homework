@@ -36,3 +36,6 @@ build/
 
 ### Class files ###
 *.class
+
+### Gitignore ###
+.gitignore
