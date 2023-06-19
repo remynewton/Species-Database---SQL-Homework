@@ -38,4 +38,4 @@ build/
 *.class
 
 ### Gitignore ###
-.gitignore
+.git/info/exclude
