@@ -23,47 +23,52 @@ public class ImagesRepositoryImpl implements ImagesRepository {
 
     @Override
     public void create(Images image) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO images (id, url, format) VALUES (?, ?, ?)");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO images (id, url, format) VALUES (?, ?, ?)");
             ps.setInt(1, image.getId());
             ps.setString(2, image.getUrl());
             ps.setString(3, image.getFormat());
             ps.executeUpdate();
+            ps.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
     @Override
     public void update(Images image) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "UPDATE images SET id = ?, url = ?, format = ? WHERE id = ?");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE images SET id = ?, url = ?, format = ? WHERE id = ?");
             ps.setInt(1, image.getId());
             ps.setString(2, image.getUrl());
             ps.setString(3, image.getFormat());
             ps.executeUpdate();
+            ps.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
     @Override
     public Optional<Images> findByID(int id) {
         Images image = null;
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "SELECT id, url, format FROM images WHERE id = ?");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT id, url, format FROM images WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            String url = null;
-            String format = null;
-            int oid = 0;
-            image = null;
             if (rs.next()) {
                 image = new Images();
                 image.setId(rs.getInt("id"));
@@ -72,7 +77,10 @@ public class ImagesRepositoryImpl implements ImagesRepository {
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
+        assert image != null;
         return Optional.of(image);
     }
 }

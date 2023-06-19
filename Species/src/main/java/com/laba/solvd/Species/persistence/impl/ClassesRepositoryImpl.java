@@ -23,14 +23,15 @@ public class ClassesRepositoryImpl implements ClassesRepository {
 
     @Override
     public void create(Classes classes) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO classes (id, name) VALUES (?, ?)");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO classes (id, name) VALUES (?, ?)");
             ps.setInt(1, classes.getId());
             ps.setString(2, classes.getName());
             ps.executeUpdate();
-
+            ps.close();
             List<Families> families = classes.getFamilies();
             String temp = "INSERT INTO families (id, name, class_id) VALUES (?, ?, ?)";
             for (Families family : families) {
@@ -41,8 +42,10 @@ public class ClassesRepositoryImpl implements ClassesRepository {
                     tempPs.executeUpdate();
                 }
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 }

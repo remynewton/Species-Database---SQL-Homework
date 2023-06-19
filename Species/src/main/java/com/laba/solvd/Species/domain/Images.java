@@ -8,7 +8,7 @@ public class Images {
     private int id;
     private String url;
     private String format;
-    private List<Species> species = new ArrayList<>();
+    private List<Species> species;
 
     public Images(int id, String url, String format, List<Species> species) {
         this.id = id;

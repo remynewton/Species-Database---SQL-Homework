@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ConservationStatuses {
     private int id;
     private String status;
-    private List<Species> species = new ArrayList<>();
+    private List<Species> species;
 
     public ConservationStatuses(int id, String status, List<Species> species) {
         this.id = id;

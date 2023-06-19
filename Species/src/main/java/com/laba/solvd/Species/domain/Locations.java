@@ -8,13 +8,15 @@ import java.util.Objects;
 public class Locations {
     private int id;
     private String name;
-    private double[] coordinates = new double[2];
-    private List<Species> species = new ArrayList<>();
+    private double longitude;
+    private double latitude;
+    private List<Species> species;
 
-    public Locations(int id, String name, double[] coordinates, List<Species> species) {
+    public Locations(int id, String name, double longitude, double latitude, List<Species> species) {
         this.id = id;
         this.name = name;
-        this.coordinates = coordinates;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.species = species;
     }
 
@@ -37,12 +39,20 @@ public class Locations {
         this.name = name;
     }
 
-    public double[] getCoordinates() {
-        return coordinates;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setCoordinates(double[] coordinates) {
-        this.coordinates = coordinates;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public List<Species> getSpecies() {
@@ -58,13 +68,11 @@ public class Locations {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Locations locations = (Locations) o;
-        return id == locations.id && Objects.equals(name, locations.name) && Arrays.equals(coordinates, locations.coordinates) && Objects.equals(species, locations.species);
+        return id == locations.id && Double.compare(locations.longitude, longitude) == 0 && Double.compare(locations.latitude, latitude) == 0 && Objects.equals(name, locations.name) && Objects.equals(species, locations.species);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, species);
-        result = 31 * result + Arrays.hashCode(coordinates);
-        return result;
+        return Objects.hash(id, name, longitude, latitude, species);
     }
 }

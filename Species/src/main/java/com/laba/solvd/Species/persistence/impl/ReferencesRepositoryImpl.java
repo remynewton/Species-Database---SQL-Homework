@@ -20,27 +20,32 @@ public class ReferencesRepositoryImpl implements ReferencesRepository {
 
     @Override
     public void create(References reference) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO references (id, title, author, year) VALUES (?, ?, ?, ?)");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO references (id, title, author, year) VALUES (?, ?, ?, ?)");
             ps.setInt(1, reference.getId());
             ps.setString(2, reference.getTitle());
             ps.setString(3, reference.getAuthor());
             ps.setDate(4, (Date) reference.getDate());
             ps.executeUpdate();
+            ps.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
     @Override
     public Optional<References> findByID(int id) {
         References reference = null;
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "SELECT id, title, author, year FROM references WHERE id = ?");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT id, title, author, year FROM references WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -50,8 +55,12 @@ public class ReferencesRepositoryImpl implements ReferencesRepository {
                 reference.setAuthor(rs.getString("author"));
                 reference.setDate(rs.getDate("date"));
             }
+            rs.close();
+            ps.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
         return Optional.ofNullable(reference);
     }

@@ -8,10 +8,10 @@ public class Species {
     private int id;
     private String commonName;
     private String scientificName;
-    private List<References> references = new ArrayList<>();
-    private List<Images> images = new ArrayList<>();
-    private List<Locations> locations = new ArrayList<>();
-    private List<Characteristics> characteristics = new ArrayList<>();
+    private List<References> references;
+    private List<Images> images;
+    private List<Locations> locations;
+    private List<Characteristics> characteristics;
     ConservationStatuses conservationStatus;
     Families family;
 

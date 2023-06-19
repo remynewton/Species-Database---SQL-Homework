@@ -23,88 +23,109 @@ public class CharacteristicsRepositoryImpl implements CharacteristicsRepository 
 
     @Override
     public void create(Characteristics characteristic) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO characteristics (id, name, category) VALUES (?, ?, ?)")
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO characteristics (id, name, category) VALUES (?, ?, ?)");
             ps.setInt(1, characteristic.getId());
             ps.setString(2, characteristic.getName());
             ps.setString(3, characteristic.getCategory());
             ps.executeUpdate();
+            ps.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
     @Override
     public void update(Characteristics characteristic) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "UPDATE characteristics SET name = ?, category = ? WHERE id = ?")
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE characteristics SET name = ?, category = ? WHERE id = ?");
             ps.setString(1, characteristic.getName());
             ps.setString(2, characteristic.getCategory());
             ps.setInt(3, characteristic.getId());
             ps.executeUpdate();
+            ps.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
     @Override
     public Optional<Characteristics> findByCategory(String category) {
         Characteristics characteristic = null;
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "SELECT id, name, category FROM characteristics WHERE category = ?")
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT id, name, category FROM characteristics WHERE category = ?");
             ps.setString(1, category);
             ResultSet rs = ps.executeQuery();
-            characteristic = null;
             if (rs.next()) {
                 characteristic = new Characteristics();
                 characteristic.setId(rs.getInt("id"));
                 characteristic.setName(rs.getString("name"));
                 characteristic.setCategory(rs.getString("category"));
             }
-        } catch (SQLException | ClassNotFoundException e) {
+            rs.close();
+            ps.close();
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
+        assert characteristic != null;
         return Optional.of(characteristic);
     }
 
     @Override
     public Optional<Characteristics> findByID(int id) {
         Characteristics characteristic = null;
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "SELECT id, name, category FROM characteristics WHERE id = ?")
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT id, name, category FROM characteristics WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            characteristic = null;
             if (rs.next()) {
                 characteristic = new Characteristics();
                 characteristic.setId(rs.getInt("id"));
                 characteristic.setName(rs.getString("name"));
                 characteristic.setCategory(rs.getString("category"));
             }
-        } catch (SQLException | ClassNotFoundException e) {
+            rs.close();
+            ps.close();
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
+        assert characteristic != null;
         return Optional.of(characteristic);
     }
 
     @Override
     public void deleteByID(int id) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "DELETE FROM characteristics WHERE id = ?")
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "DELETE FROM characteristics WHERE id = ?");
             ps.setInt(1, id);
             ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
+            ps.close();
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 }

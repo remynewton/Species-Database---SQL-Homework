@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Classes {
     private int id;
     private String name;
-    private List<Families> families = new ArrayList<>();
+    private List<Families> families;
 
     public Classes(int id, String name, List<Families> families) {
         this.id = id;

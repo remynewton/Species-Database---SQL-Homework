@@ -10,7 +10,7 @@ public class References {
     private String title;
     private String author;
     private Date date;
-    private List<Species> species = new ArrayList<>();
+    private List<Species> species;
 
     public References(int id, String title, String author, Date date, List<Species> species) {
         this.id = id;

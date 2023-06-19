@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Kingdoms {
     private int id;
     private String name;
-    private List<Classes> classes = new ArrayList<>();
+    private List<Classes> classes;
 
     public Kingdoms(int id, String name, List<Classes> classes) {
         this.id = id;

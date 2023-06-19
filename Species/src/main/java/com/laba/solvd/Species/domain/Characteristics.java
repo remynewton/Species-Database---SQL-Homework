@@ -8,7 +8,7 @@ public class Characteristics {
     private int id;
     private String name;
     private String category;
-    private List<Species> species = new ArrayList<>();
+    private List<Species> species;
 
     public Characteristics(int id, String name, String category, List<Species> species) {
         this.id = id;

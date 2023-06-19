@@ -23,14 +23,15 @@ public class KingdomsRepositoryImpl implements KingdomsRepository {
 
     @Override
     public void create(Kingdoms kingdom) {
-        try (Connection connection = CONNECTION_POOL.getConnection();
-             PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO kingdoms (id, name) VALUES (?, ?)");
-        ) {
+        Connection connection = null;
+        try {
+            connection = CONNECTION_POOL.getConnection();
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO kingdoms (id, name) VALUES (?, ?)");
             ps.setInt(1, kingdom.getId());
             ps.setString(2, kingdom.getName());
             ps.executeUpdate();
-
+            ps.close();
             List<Classes> classes = kingdom.getClasses();
             String temp = "INSERT INTO classes (id, name, kingdom_id) VALUES (?, ?, ?)";
             for (Classes classEntry : classes) {
@@ -43,6 +44,8 @@ public class KingdomsRepositoryImpl implements KingdomsRepository {
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 }
