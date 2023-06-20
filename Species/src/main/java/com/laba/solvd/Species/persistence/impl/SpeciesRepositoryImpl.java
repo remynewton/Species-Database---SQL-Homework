@@ -3,17 +3,15 @@ package com.laba.solvd.Species.persistence.impl;
 import com.laba.solvd.Species.domain.Species;
 import com.laba.solvd.Species.persistence.ConnectionPool;
 import com.laba.solvd.Species.persistence.SpeciesRepository;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class SpeciesRepositoryImpl implements SpeciesRepository {
-
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private static final ConnectionPool CONNECTION_POOL;
 
     static {
@@ -27,19 +25,22 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
     @Override
     public void create(Species species) {
         Connection connection = null;
-        String sql = "INSERT INTO species (id, common_name, scientific_name, conservation_statuses_id, families_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO species (common_name, scientific_name, conservation_statuses_id, families_id) VALUES (?, ?, ?, ?)";
         try {
             connection = CONNECTION_POOL.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, species.getId());
-            ps.setString(2, species.getCommonName());
-            ps.setString(3, species.getScientificName());
-            ps.setInt(4, species.getConservationStatus().getId());
-            ps.setInt(5, species.getFamily().getId());
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, species.getCommonName());
+            ps.setString(2, species.getScientificName());
+            ps.setInt(3, species.getConservationStatus().getId());
+            ps.setInt(4, species.getFamily().getId());
             ps.executeUpdate();
+            ResultSet idResultSet = ps.getGeneratedKeys();
+            while (idResultSet.next()) {
+                species.setId(idResultSet.getInt("id"));
+            }
             ps.close();
         } catch(ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -64,7 +65,7 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
             rs.close();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -91,7 +92,7 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
             }
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -113,7 +114,7 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
             ps.executeUpdate();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -130,7 +131,7 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
             ps.executeUpdate();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

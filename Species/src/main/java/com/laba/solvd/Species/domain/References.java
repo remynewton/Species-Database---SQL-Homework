@@ -1,8 +1,6 @@
 package com.laba.solvd.Species.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class References {
@@ -25,7 +23,7 @@ public class References {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

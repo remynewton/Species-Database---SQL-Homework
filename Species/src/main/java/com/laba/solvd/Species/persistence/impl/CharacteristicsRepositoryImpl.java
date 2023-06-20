@@ -3,14 +3,13 @@ package com.laba.solvd.Species.persistence.impl;
 import com.laba.solvd.Species.domain.Characteristics;
 import com.laba.solvd.Species.persistence.CharacteristicsRepository;
 import com.laba.solvd.Species.persistence.ConnectionPool;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class CharacteristicsRepositoryImpl implements CharacteristicsRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private static final ConnectionPool CONNECTION_POOL;
 
     static {
@@ -26,14 +25,17 @@ public class CharacteristicsRepositoryImpl implements CharacteristicsRepository 
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO characteristics (id, name, category) VALUES (?, ?, ?)");
-            ps.setInt(1, characteristic.getId());
-            ps.setString(2, characteristic.getName());
-            ps.setString(3, characteristic.getCategory());
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO characteristics (name, category) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, characteristic.getName());
+            ps.setString(2, characteristic.getCategory());
             ps.executeUpdate();
+            ResultSet idResultSet = ps.getGeneratedKeys();
+            while (idResultSet.next()) {
+                characteristic.setId(idResultSet.getInt("id"));
+            }
             ps.close();
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -52,7 +54,7 @@ public class CharacteristicsRepositoryImpl implements CharacteristicsRepository 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -77,7 +79,7 @@ public class CharacteristicsRepositoryImpl implements CharacteristicsRepository 
             rs.close();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -104,7 +106,7 @@ public class CharacteristicsRepositoryImpl implements CharacteristicsRepository 
             rs.close();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -123,7 +125,7 @@ public class CharacteristicsRepositoryImpl implements CharacteristicsRepository 
             ps.executeUpdate();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

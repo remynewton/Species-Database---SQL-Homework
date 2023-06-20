@@ -10,12 +10,20 @@ import java.util.Optional;
 public class CharacteristicsServiceImpl implements CharacteristicsService {
     private final CharacteristicsRepository characteristicsRepository;
 
-    public CharacteristicsServiceImpl(CharacteristicsRepository characteristicsRepository) {
+    public CharacteristicsServiceImpl() {
         this.characteristicsRepository = new CharacteristicsRepositoryImpl();
     }
 
     @Override
+    public Characteristics create(Characteristics characteristics, int id) {
+        characteristics.setId(null);
+        characteristicsRepository.create(characteristics);
+        return characteristics;
+    }
+
+    @Override
     public void create(Characteristics characteristics) {
+        characteristics.setId(null);
         characteristicsRepository.create(characteristics);
     }
 

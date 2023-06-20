@@ -3,14 +3,13 @@ package com.laba.solvd.Species.persistence.impl;
 import com.laba.solvd.Species.domain.Images;
 import com.laba.solvd.Species.persistence.ConnectionPool;
 import com.laba.solvd.Species.persistence.ImagesRepository;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Optional;
 
 public class ImagesRepositoryImpl implements ImagesRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private static final ConnectionPool CONNECTION_POOL;
 
     static {
@@ -27,14 +26,17 @@ public class ImagesRepositoryImpl implements ImagesRepository {
         try {
             connection = CONNECTION_POOL.getConnection();
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO images (id, url, format) VALUES (?, ?, ?)");
-            ps.setInt(1, image.getId());
-            ps.setString(2, image.getUrl());
-            ps.setString(3, image.getFormat());
+                    "INSERT INTO images (url, format) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, image.getUrl());
+            ps.setString(2, image.getFormat());
             ps.executeUpdate();
+            ResultSet idResultSet = ps.getGeneratedKeys();
+            while (idResultSet.next()) {
+                image.setId(idResultSet.getInt("id"));
+            }
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -53,7 +55,7 @@ public class ImagesRepositoryImpl implements ImagesRepository {
             ps.executeUpdate();
             ps.close();
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -76,7 +78,7 @@ public class ImagesRepositoryImpl implements ImagesRepository {
                 image.setFormat(rs.getString("format"));
             }
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Failed to connect", e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

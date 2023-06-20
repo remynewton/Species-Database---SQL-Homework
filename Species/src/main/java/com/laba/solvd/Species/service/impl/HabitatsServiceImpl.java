@@ -8,12 +8,13 @@ import com.laba.solvd.Species.service.HabitatsService;
 public class HabitatsServiceImpl implements HabitatsService {
     private final HabitatsRepository habitatsRepository;
 
-    public HabitatsServiceImpl(HabitatsRepository habitatsRepository) {
+    public HabitatsServiceImpl() {
         this.habitatsRepository = new HabitatsRepositoryImpl();
     }
 
     @Override
     public void create(Habitats habitats) {
+        habitats.setId(null);
         habitatsRepository.create(habitats);
     }
 }

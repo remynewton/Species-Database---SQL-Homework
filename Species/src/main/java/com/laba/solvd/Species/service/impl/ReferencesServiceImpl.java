@@ -8,12 +8,14 @@ import com.laba.solvd.Species.service.ReferencesService;
 public class ReferencesServiceImpl implements ReferencesService {
     private final ReferencesRepository referencesRepository;
 
-    public ReferencesServiceImpl(ReferencesRepository referencesRepository) {
+    public ReferencesServiceImpl() {
         this.referencesRepository = new ReferencesRepositoryImpl();
     }
 
     @Override
-    public void create(References reference) {
+    public References create(References reference, int id) {
+        reference.setId(null);
         referencesRepository.create(reference);
+        return reference;
     }
 }

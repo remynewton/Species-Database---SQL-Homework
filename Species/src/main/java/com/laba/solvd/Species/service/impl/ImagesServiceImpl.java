@@ -8,12 +8,13 @@ import com.laba.solvd.Species.service.ImagesService;
 public class ImagesServiceImpl implements ImagesService {
     private final ImagesRepository imagesRepository;
 
-    public ImagesServiceImpl(ImagesRepository imagesRepository) {
+    public ImagesServiceImpl() {
         this.imagesRepository = new ImagesRepositoryImpl();
     }
 
     @Override
     public void create(Images image) {
+        image.setId(null);
         imagesRepository.create(image);
     }
 }
