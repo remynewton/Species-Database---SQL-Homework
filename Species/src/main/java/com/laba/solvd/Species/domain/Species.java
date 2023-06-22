@@ -7,13 +7,13 @@ public class Species {
     private int id;
     private String commonName;
     private String scientificName;
-    private List<References> references;
-    private List<Images> images;
-    private List<Characteristics> characteristics;
-    ConservationStatuses conservationStatus;
-    Families family;
+    private List<Reference> references;
+    private List<Image> images;
+    private List<Characteristic> characteristics;
+    private ConservationStatus conservationStatus;
+    private Family family;
 
-    public Species(int id, String commonName, String scientificName, List<References> references, List<Images> images, List<Characteristics> characteristics, ConservationStatuses conservationStatus, Families family) {
+    public Species(int id, String commonName, String scientificName, List<Reference> references, List<Image> images, List<Characteristic> characteristics, ConservationStatus conservationStatus, Family family) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
@@ -51,43 +51,43 @@ public class Species {
         this.scientificName = scientificName;
     }
 
-    public List<References> getReferences() {
+    public List<Reference> getReferences() {
         return references;
     }
 
-    public void setReferences(List<References> references) {
+    public void setReferences(List<Reference> references) {
         this.references = references;
     }
 
-    public List<Images> getImages() {
+    public List<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Images> images) {
+    public void setImages(List<Image> images) {
         this.images = images;
     }
 
-    public List<Characteristics> getCharacteristics() {
+    public List<Characteristic> getCharacteristics() {
         return characteristics;
     }
 
-    public void setCharacteristics(List<Characteristics> characteristics) {
+    public void setCharacteristics(List<Characteristic> characteristics) {
         this.characteristics = characteristics;
     }
 
-    public ConservationStatuses getConservationStatus() {
+    public ConservationStatus getConservationStatus() {
         return conservationStatus;
     }
 
-    public void setConservationStatus(ConservationStatuses conservationStatus) {
+    public void setConservationStatus(ConservationStatus conservationStatus) {
         this.conservationStatus = conservationStatus;
     }
 
-    public Families getFamily() {
+    public Family getFamily() {
         return family;
     }
 
-    public void setFamily(Families family) {
+    public void setFamily(Family family) {
         this.family = family;
     }
 

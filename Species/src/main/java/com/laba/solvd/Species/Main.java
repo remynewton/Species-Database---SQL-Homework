@@ -1,10 +1,10 @@
 package com.laba.solvd.Species;
 
-import com.laba.solvd.Species.domain.Characteristics;
+import com.laba.solvd.Species.domain.Characteristic;
 import com.laba.solvd.Species.domain.Species;
-import com.laba.solvd.Species.service.CharacteristicsService;
+import com.laba.solvd.Species.service.CharacteristicService;
 import com.laba.solvd.Species.service.SpeciesService;
-import com.laba.solvd.Species.service.impl.CharacteristicsServiceImpl;
+import com.laba.solvd.Species.service.impl.CharacteristicServiceImpl;
 import com.laba.solvd.Species.service.impl.SpeciesServiceImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -18,13 +18,13 @@ public class Main {
         Species polarBear = new Species();
         polarBear.setCommonName("Polar Bear");
         polarBear.setScientificName("Ursus maritimus");
-        Characteristics whiteFur = new Characteristics();
+        Characteristic whiteFur = new Characteristic();
         whiteFur.setName("White Fur");
         whiteFur.setCategory("Fur Color");
-        Characteristics nocturnal = new Characteristics();
+        Characteristic nocturnal = new Characteristic();
         nocturnal.setName("Nocturnal");
         nocturnal.setCategory("Circadian Rhythms");
-        CharacteristicsService cs = new CharacteristicsServiceImpl();
+        CharacteristicService cs = new CharacteristicServiceImpl();
         cs.create(whiteFur);
         cs.create(nocturnal);
         polarBear.setCharacteristics(List.of(nocturnal, whiteFur));

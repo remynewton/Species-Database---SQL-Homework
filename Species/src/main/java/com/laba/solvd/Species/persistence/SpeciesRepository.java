@@ -1,5 +1,8 @@
 package com.laba.solvd.Species.persistence;
 
+import com.laba.solvd.Species.domain.Characteristic;
+import com.laba.solvd.Species.domain.Image;
+import com.laba.solvd.Species.domain.Reference;
 import com.laba.solvd.Species.domain.Species;
 
 import java.util.List;
@@ -11,4 +14,7 @@ public interface SpeciesRepository {
     Optional<Species> findByID(int ID);
     void update (Species species);
     void deleteByID (int id);
+    void setReference(Species species, Reference reference);
+    void setCharacteristic(Species species, Characteristic characteristic);
+    void setImage(Species species, Image image);
 }
