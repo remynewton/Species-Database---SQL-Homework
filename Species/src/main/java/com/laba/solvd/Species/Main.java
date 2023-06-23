@@ -30,5 +30,10 @@ public class Main {
         polarBear.setCharacteristics(List.of(nocturnal, whiteFur));
         SpeciesService ss = new SpeciesServiceImpl();
         ss.create(polarBear);
+
+        String xmlFilePath = "Species/src/main/resources/Species.xml";
+        String xsdFilePath = "Species/src/main/resources/SpeciesSchema.xsd";
+        SAXParser saxParser = new SAXParser();
+        logger.info(saxParser.validateXMLWithXSD(xmlFilePath, xsdFilePath));
     }
 }

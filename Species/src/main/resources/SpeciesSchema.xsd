@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Species">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="species" type="SpeciesType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="SpeciesType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="commonName" type="xs:string"/>
+            <xs:element name="scientificName" type="xs:string"/>
+            <xs:element name="references" type="ReferencesType"/>
+            <xs:element name="images" type="ImagesType"/>
+            <xs:element name="characteristics" type="CharacteristicsType"/>
+            <xs:element name="conservationStatus" type="ConservationStatusType"/>
+            <xs:element name="family" type="FamilyType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ReferencesType">
+        <xs:sequence>
+            <xs:element name="reference" type="ReferenceType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ReferenceType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="date" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ImagesType">
+        <xs:sequence>
+            <xs:element name="image" type="ImageType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ImageType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="url" type="xs:string"/>
+            <xs:element name="format" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CharacteristicsType">
+        <xs:sequence>
+            <xs:element name="characteristic" type="CharacteristicType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CharacteristicType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="category" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ConservationStatusType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="status" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="FamilyType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
