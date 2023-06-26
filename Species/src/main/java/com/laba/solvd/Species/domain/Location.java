@@ -2,12 +2,22 @@ package com.laba.solvd.Species.domain;
 
 import java.util.List;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Location {
+    @XmlElement
     private int id;
+    @XmlElement
     private String name;
+    @XmlElement
     private double longitude;
+    @XmlElement
     private double latitude;
+    @XmlElement
     private List<Species> species;
 
     public Location(int id, String name, double longitude, double latitude, List<Species> species) {

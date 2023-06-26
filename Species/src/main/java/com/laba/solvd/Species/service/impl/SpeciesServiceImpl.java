@@ -33,7 +33,7 @@ public class SpeciesServiceImpl implements SpeciesService {
         speciesRepository.create(species);
         if (species.getReferences() != null) {
             List<Reference> references = species.getReferences().stream()
-                    .map(reference -> referenceService.create(reference, species.getId()))
+                    .map(referenceService::create)
                     .collect(Collectors.toList());
             for (Reference reference : references) {
                 speciesRepository.setReference(species, reference);
@@ -41,7 +41,7 @@ public class SpeciesServiceImpl implements SpeciesService {
         }
         if (species.getCharacteristics() != null) {
             List<Characteristic> characteristics = species.getCharacteristics().stream()
-                    .map(characteristic -> characteristicsService.create(characteristic, species.getId()))
+                    .map(characteristicsService::create)
                     .collect(Collectors.toList());
             for (Characteristic characteristic : characteristics) {
                 speciesRepository.setCharacteristic(species, characteristic);
@@ -49,7 +49,7 @@ public class SpeciesServiceImpl implements SpeciesService {
         }
         if (species.getImages() != null) {
             List<Image> images = species.getImages().stream()
-                    .map(image -> imagesService.create(image, species.getId()))
+                    .map(imagesService::create)
                     .collect(Collectors.toList());
             for (Image image : images) {
                 speciesRepository.setImage(species, image);

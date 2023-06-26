@@ -15,16 +15,10 @@ public class CharacteristicServiceImpl implements CharacteristicService {
     }
 
     @Override
-    public Characteristic create(Characteristic characteristics, int id) {
+    public Characteristic create(Characteristic characteristics) {
         characteristics.setId(null);
         characteristicsRepository.create(characteristics);
         return characteristics;
-    }
-
-    @Override
-    public void create(Characteristic characteristics) {
-        characteristics.setId(null);
-        characteristicsRepository.create(characteristics);
     }
 
     @Override

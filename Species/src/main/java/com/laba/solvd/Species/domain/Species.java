@@ -2,15 +2,28 @@ package com.laba.solvd.Species.domain;
 
 import java.util.List;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Species {
+    @XmlElement
     private int id;
+    @XmlElement
     private String commonName;
+    @XmlElement
     private String scientificName;
+    @XmlElement
     private List<Reference> references;
+    @XmlElement
     private List<Image> images;
+    @XmlElement
     private List<Characteristic> characteristics;
+    @XmlElement
     private ConservationStatus conservationStatus;
+    @XmlElement
     private Family family;
 
     public Species(int id, String commonName, String scientificName, List<Reference> references, List<Image> images, List<Characteristic> characteristics, ConservationStatus conservationStatus, Family family) {
@@ -102,5 +115,19 @@ public class Species {
     @Override
     public int hashCode() {
         return Objects.hash(id, commonName, scientificName, references, images, characteristics, conservationStatus, family);
+    }
+
+    @Override
+    public String toString() {
+        return "Species{" +
+                "id=" + id +
+                ", commonName='" + commonName + '\'' +
+                ", scientificName='" + scientificName + '\'' +
+                ", references=" + references +
+                ", images=" + images +
+                ", characteristics=" + characteristics +
+                ", conservationStatus=" + conservationStatus +
+                ", family=" + family +
+                '}';
     }
 }

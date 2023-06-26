@@ -1,19 +1,27 @@
-package com.laba.solvd.Species;
+package com.laba.solvd.Species.parsers;
 
-import javax.xml.XMLConstants;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
+import com.laba.solvd.Species.domain.*;
 import org.apache.log4j.Logger;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-public class SAXParser {
+import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+public class SAX_Parser implements Parser {
     private final Logger logger = Logger.getLogger("GLOBAL");
+
     public String validateXMLWithXSD(String xmlFilePath, String xsdFilePath) {
         try {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -35,11 +43,26 @@ public class SAXParser {
         }
         return null;
     }
+
+    @Override
+    public List<Species> parse(File file) {
+        List<Species> speciesList = null;
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+            SAXParser parser = factory.newSAXParser();
+            Handler handler = new Handler();
+            parser.parse(file, handler);
+            speciesList = handler.getSpeciesList();
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            logger.error(e);
+        }
+        return speciesList;
+    }
+
     private static class CustomErrorHandler implements ErrorHandler {
         private boolean validationError;
         private final StringBuilder errors;
         private final Logger logger = Logger.getLogger("GLOBAL");
-
         public CustomErrorHandler() {
             validationError = false;
             errors = new StringBuilder();
@@ -54,18 +77,18 @@ public class SAXParser {
         }
 
         @Override
-        public void warning(SAXParseException exception) throws SAXException {
+        public void warning(SAXParseException exception) {
             logger.warn("Warning: " + exception.getMessage());
         }
 
         @Override
-        public void error(SAXParseException exception) throws SAXException {
+        public void error(SAXParseException exception) {
             validationError = true;
             logger.error("Error: " + exception.getMessage());
         }
 
         @Override
-        public void fatalError(SAXParseException exception) throws SAXException {
+        public void fatalError(SAXParseException exception) {
             validationError = true;
             logger.fatal("Fatal Error: " + exception.getMessage());
         }

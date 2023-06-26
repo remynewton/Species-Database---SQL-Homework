@@ -1,10 +1,18 @@
 package com.laba.solvd.Species.domain;
 
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Characteristic {
+    @XmlElement
     private int id;
+    @XmlElement
     private String name;
+    @XmlElement
     private String category;
 
     public Characteristic(int id, String name, String category) {
@@ -51,5 +59,14 @@ public class Characteristic {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, category);
+    }
+
+    @Override
+    public String toString() {
+        return "Characteristic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                '}';
     }
 }

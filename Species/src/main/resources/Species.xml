@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Species>
+<SpeciesList>
     <species>
         <id>1</id>
         <commonName>Tiger</commonName>
@@ -9,7 +9,7 @@
                 <id>1</id>
                 <title>Tigers of the World: Genomics and Conservation</title>
                 <author>Shu-Jin Luo</author>
-                <date>02/15/2019</date>
+                <date>2019-02-15</date>
             </reference>
         </references>
         <images>
@@ -35,4 +35,4 @@
             <name>Felidae</name>
         </family>
     </species>
-</Species>
+</SpeciesList>

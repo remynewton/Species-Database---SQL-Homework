@@ -2,11 +2,20 @@ package com.laba.solvd.Species.domain;
 
 import java.util.Date;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Reference {
+    @XmlElement
     private int id;
+    @XmlElement
     private String title;
+    @XmlElement
     private String author;
+    @XmlElement
     private Date date;
 
     public Reference(int id, String title, String author, Date date) {
@@ -62,5 +71,15 @@ public class Reference {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, author, date);
+    }
+
+    @Override
+    public String toString() {
+        return "Reference{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

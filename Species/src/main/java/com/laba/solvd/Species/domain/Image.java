@@ -1,10 +1,18 @@
 package com.laba.solvd.Species.domain;
 
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Image {
+    @XmlElement
     private int id;
+    @XmlElement
     private String url;
+    @XmlElement
     private String format;
 
     public Image(int id, String url, String format) {
@@ -51,5 +59,14 @@ public class Image {
     @Override
     public int hashCode() {
         return Objects.hash(id, url, format);
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", format='" + format + '\'' +
+                '}';
     }
 }

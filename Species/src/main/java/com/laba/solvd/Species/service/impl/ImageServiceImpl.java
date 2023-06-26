@@ -13,13 +13,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void create(Image image) {
-        image.setId(null);
-        imagesRepository.create(image);
-    }
-
-    @Override
-    public Image create(Image image, int id) {
+    public Image create(Image image) {
         image.setId(null);
         imagesRepository.create(image);
         return image;
