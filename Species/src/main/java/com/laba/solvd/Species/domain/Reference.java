@@ -33,7 +33,7 @@ public class Reference {
     public Reference() {
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 

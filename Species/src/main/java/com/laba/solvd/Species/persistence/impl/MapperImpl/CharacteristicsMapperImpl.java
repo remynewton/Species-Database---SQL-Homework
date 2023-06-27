@@ -4,10 +4,12 @@ import com.laba.solvd.Species.domain.Characteristic;
 import com.laba.solvd.Species.persistence.CharacteristicRepository;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import java.util.Optional;
 
 public class CharacteristicsMapperImpl implements CharacteristicRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private SqlSession sqlSession;
 
     public CharacteristicsMapperImpl() {

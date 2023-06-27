@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
 public class Species {
     @JsonProperty
     @XmlElement
-    private Integer id;
+    private int id;
     @JsonProperty
     @XmlElement
     private String commonName;
@@ -53,11 +53,11 @@ public class Species {
     public Species() {
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -4,8 +4,10 @@ import com.laba.solvd.Species.domain.Class;
 import com.laba.solvd.Species.persistence.ClassRepository;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 public class ClassMapperImpl implements ClassRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private SqlSession sqlSession;
 
     public ClassMapperImpl() {

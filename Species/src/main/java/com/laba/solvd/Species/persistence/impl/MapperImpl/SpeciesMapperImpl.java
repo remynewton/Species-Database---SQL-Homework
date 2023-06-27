@@ -7,15 +7,17 @@ import com.laba.solvd.Species.domain.Species;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import com.laba.solvd.Species.persistence.SpeciesRepository;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class SpeciesMapperImpl implements SpeciesRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private SqlSession sqlSession;
 
     public SpeciesMapperImpl() {
-        this.sqlSession = this.sqlSession = MyBatisStarter.getSession();;
+        this.sqlSession = MyBatisStarter.getSession();;
     }
 
     @Override

@@ -4,10 +4,12 @@ import com.laba.solvd.Species.domain.Reference;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import com.laba.solvd.Species.persistence.ReferenceRepository;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import java.util.Optional;
 
 public class ReferenceMapperImpl implements ReferenceRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private SqlSession sqlSession;
 
     public ReferenceMapperImpl() {

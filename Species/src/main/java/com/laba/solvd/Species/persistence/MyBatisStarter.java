@@ -11,16 +11,14 @@ import java.io.IOException;
 public class MyBatisStarter {
     private static final Logger logger = Logger.getLogger("GLOBAL");
     private static SqlSessionFactory sqlSessionFactory;
-    public static void start() {
+
+    public static SqlSession getSession() {
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder()
-                    .build(Resources.getResourceAsReader("src/main/resources/mybatis-config.xml"));
+                    .build(Resources.getResourceAsReader("mybatis-config.xml"));
         } catch (IOException e) {
             logger.error(e);
         }
-    }
-
-    public static SqlSession getSession() {
         return sqlSessionFactory.openSession();
     }
 }

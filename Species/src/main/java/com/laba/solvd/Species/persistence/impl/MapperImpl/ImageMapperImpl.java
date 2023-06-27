@@ -4,10 +4,12 @@ import com.laba.solvd.Species.domain.Image;
 import com.laba.solvd.Species.persistence.ImageRepository;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import java.util.Optional;
 
 public class ImageMapperImpl implements ImageRepository {
+    private final Logger logger = Logger.getLogger("GLOBAL");
     private SqlSession sqlSession;
 
     public ImageMapperImpl() {
