@@ -1,17 +1,9 @@
 package com.laba.solvd.Species.service.impl;
 
-import com.laba.solvd.Species.domain.Characteristic;
-import com.laba.solvd.Species.domain.Image;
-import com.laba.solvd.Species.domain.Reference;
-import com.laba.solvd.Species.domain.Species;
+import com.laba.solvd.Species.domain.*;
 import com.laba.solvd.Species.persistence.SpeciesRepository;
-import com.laba.solvd.Species.persistence.impl.MapperImpl.ReferenceMapperImpl;
 import com.laba.solvd.Species.persistence.impl.MapperImpl.SpeciesMapperImpl;
-import com.laba.solvd.Species.persistence.impl.SpeciesRepositoryImpl;
-import com.laba.solvd.Species.service.CharacteristicService;
-import com.laba.solvd.Species.service.ImageService;
-import com.laba.solvd.Species.service.ReferenceService;
-import com.laba.solvd.Species.service.SpeciesService;
+import com.laba.solvd.Species.service.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,8 +13,10 @@ public class SpeciesServiceImpl implements SpeciesService {
     private final ReferenceService referenceService;
     private final CharacteristicService characteristicsService;
     private final ImageService imagesService;
+    private final ConservationService conservationService;
 
     public SpeciesServiceImpl() {
+        this.conservationService = new ConservationServiceImpl();
         // this.speciesRepository = new SpeciesRepositoryImpl();
         this.speciesRepository = new SpeciesMapperImpl();
         this.referenceService = new ReferenceServiceImpl();
@@ -57,6 +51,10 @@ public class SpeciesServiceImpl implements SpeciesService {
             for (Image image : images) {
                 speciesRepository.setImage(species, image);
             }
+        }
+        if (species.getConservationStatus() != null) {
+            ConservationStatus conservationStatus = conservationService.create(species.getConservationStatus());
+            speciesRepository.setConservationStatus(species, conservationStatus);
         }
     }
 

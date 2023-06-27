@@ -13,21 +13,38 @@ public class ImageMapperImpl implements ImageRepository {
     private SqlSession sqlSession;
 
     public ImageMapperImpl() {
-        this.sqlSession = MyBatisStarter.getSession();
+        this.sqlSession = sqlSession;
     }
 
     @Override
     public void create(Image image) {
-        sqlSession.insert("create", image);
+        try {
+            sqlSession.insert("createImage", image);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @Override
     public void update(Image image) {
-        sqlSession.update("update", image);
+        try {
+            sqlSession.update("updateImage", image);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @Override
     public Optional<Image> findByID(int id) {
-        return Optional.of(sqlSession.selectOne("findByID", id));
+        Image obj;
+        try {
+            obj = sqlSession.selectOne("findByIDImage", id);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return Optional.of(obj);
     }
 }

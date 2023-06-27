@@ -210,4 +210,8 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
             CONNECTION_POOL.releaseConnection(connection);
         }
     }
+
+    @Override
+    public void setConservationStatus(Species species, ConservationStatus conservationStatus) {
+    }
 }

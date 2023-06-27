@@ -1,16 +1,14 @@
 package com.laba.solvd.Species;
 
 import com.laba.solvd.Species.domain.Characteristic;
+import com.laba.solvd.Species.domain.ConservationStatus;
+import com.laba.solvd.Species.domain.Family;
 import com.laba.solvd.Species.domain.Species;
-import com.laba.solvd.Species.parsers.JAXB_Parser;
-import com.laba.solvd.Species.parsers.Jackson_Parser;
-import com.laba.solvd.Species.parsers.SAX_Parser;
 import com.laba.solvd.Species.service.SpeciesService;
 import com.laba.solvd.Species.service.impl.SpeciesServiceImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import java.io.File;
 import java.util.List;
 
 public class Main {
@@ -20,22 +18,6 @@ public class Main {
         String xmlFilePath = "src/main/resources/Species.xml";
         String xsdFilePath = "src/main/resources/SpeciesSchema.xsd";
         String jsonFilePath = "src/main/resources/Species.json";
-
-        // SAX Parser
-        SAX_Parser saxParser = new SAX_Parser();
-        logger.info(saxParser.validateXMLWithXSD(xmlFilePath, xsdFilePath));
-        Species species = saxParser.parse(new File(xmlFilePath));
-        logger.info(species.toString());
-
-        //JAXB Parser
-        JAXB_Parser jaxbParser = new JAXB_Parser();
-        species = jaxbParser.parse(new File(xmlFilePath));
-        logger.info(species.toString());
-
-        // Jackson Parser
-        Jackson_Parser jacksonParser = new Jackson_Parser();
-        species = jacksonParser.parse(new File(jsonFilePath));
-        logger.info(species.toString());
 
         // MyBatis
         Species polarBear = new Species();
@@ -48,6 +30,12 @@ public class Main {
         nocturnal.setName("Nocturnal");
         nocturnal.setCategory("Circadian Rhythms");
         polarBear.setCharacteristics(List.of(nocturnal, whiteFur));
+        ConservationStatus endangered = new ConservationStatus();
+        endangered.setStatus("Endangered");
+        polarBear.setConservationStatus(endangered);
+        Family ursidae = new Family();
+        ursidae.setName("Ursidae");
+        polarBear.setFamily(ursidae);
         SpeciesService ss = new SpeciesServiceImpl();
         ss.create(polarBear);
         System.out.println(polarBear);

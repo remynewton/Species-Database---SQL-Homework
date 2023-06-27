@@ -8,7 +8,7 @@ public enum Config {
     USERNAME,
     PASSWORD,
     POOLSIZE;
-    private static final String PATH = "Species/src/main/resources/mapper/config.properties";
+    private static final String PATH = "Species/src/main/resources/config.properties";
     private static Properties properties;
     private String value;
 

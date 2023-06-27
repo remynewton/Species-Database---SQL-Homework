@@ -2,7 +2,6 @@ package com.laba.solvd.Species.persistence.impl.MapperImpl;
 
 import com.laba.solvd.Species.domain.Characteristic;
 import com.laba.solvd.Species.persistence.CharacteristicRepository;
-import com.laba.solvd.Species.persistence.MyBatisStarter;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
@@ -13,32 +12,60 @@ public class CharacteristicsMapperImpl implements CharacteristicRepository {
     private SqlSession sqlSession;
 
     public CharacteristicsMapperImpl() {
-        this.sqlSession = MyBatisStarter.getSession();
+        this.sqlSession = sqlSession;
     }
 
     @Override
     public void create(Characteristic characteristic) {
-        sqlSession.insert("create", characteristic);
+        try {
+            sqlSession.insert("createCharacteristic", characteristic);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
-    @Override
-    public void update(Characteristic characteristic) {
-        sqlSession.update("update", characteristic);
-    }
+        @Override
+        public void update (Characteristic characteristic){
+            try {
+                sqlSession.update("updateCharacteristic", characteristic);
+                sqlSession.commit();
+            } finally {
+                sqlSession.close();
+            }
+        }
 
-    @Override
-    public Optional<Characteristic> findByCategory(String category) {
-        Characteristic obj = sqlSession.selectOne("findByCategory", category);
-        return Optional.of(obj);
-    }
+        @Override
+        public Optional<Characteristic> findByCategory (String category) {
+            Characteristic obj;
+            try {
+                obj = sqlSession.selectOne("findByCategoryCharacteristic", category);
+                sqlSession.commit();
+            } finally {
+                sqlSession.close();
+            }
+            return Optional.of(obj);
+        }
 
-    @Override
-    public Optional<Characteristic> findByID(int id) {
-        return Optional.of(sqlSession.selectOne("findByID", id));
-    }
+        @Override
+        public Optional<Characteristic> findByID ( int id){
+            Characteristic obj;
+            try {
+                obj = sqlSession.selectOne("findByIDCharacteristic", id);
+                sqlSession.commit();
+            } finally {
+                sqlSession.close();
+            }
+            return Optional.of(obj);
+        }
 
-    @Override
-    public void deleteByID(int id) {
-        sqlSession.delete("delete", id);
+        @Override
+        public void deleteByID (int id) {
+            try {
+                sqlSession.delete("deleteCharacteristic", id);
+                sqlSession.commit();
+            } finally {
+                sqlSession.close();
+            }
+        }
     }
-}

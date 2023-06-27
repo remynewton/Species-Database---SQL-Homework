@@ -1,9 +1,6 @@
 package com.laba.solvd.Species.persistence.impl.MapperImpl;
 
-import com.laba.solvd.Species.domain.Characteristic;
-import com.laba.solvd.Species.domain.Image;
-import com.laba.solvd.Species.domain.Reference;
-import com.laba.solvd.Species.domain.Species;
+import com.laba.solvd.Species.domain.*;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import com.laba.solvd.Species.persistence.SpeciesRepository;
 import org.apache.ibatis.session.SqlSession;
@@ -22,27 +19,56 @@ public class SpeciesMapperImpl implements SpeciesRepository {
 
     @Override
     public void create(Species species) {
-        sqlSession.insert("insert", species);
+        try {
+            sqlSession.insert("createSpecies", species);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @Override
     public List<Species> findAll() {
-        return sqlSession.selectList("findAll");
+        List<Species> obj;
+        try {
+            obj = sqlSession.selectList("findAllSpecies");
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return obj;
     }
 
     @Override
     public Optional<Species> findByID(int ID) {
-        return Optional.of(sqlSession.selectOne("findByID", ID));
+        Species obj;
+        try {
+            obj = sqlSession.selectOne("findByIDSpecies", ID);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return Optional.of(obj);
     }
 
     @Override
     public void update(Species species) {
-        sqlSession.update("update", species);
+        try {
+            sqlSession.update("updateSpecies", species);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @Override
     public void deleteByID(int id) {
-        sqlSession.delete("deleteByID", id);
+        try {
+            sqlSession.delete("deleteByIDSpecies", id);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @Override
@@ -68,6 +94,15 @@ public class SpeciesMapperImpl implements SpeciesRepository {
         try (SqlSession sqlSession1 = MyBatisStarter.getSession()) {
             SpeciesRepository speciesRepository = sqlSession1.getMapper(SpeciesRepository.class);
             speciesRepository.setImage(species, image);
+            sqlSession1.commit();
+        }
+    }
+
+    @Override
+    public void setConservationStatus(Species species, ConservationStatus conservationStatus) {
+        try (SqlSession sqlSession1 = MyBatisStarter.getSession()) {
+            SpeciesRepository speciesRepository = sqlSession1.getMapper(SpeciesRepository.class);
+            speciesRepository.setConservationStatus(species, conservationStatus);
             sqlSession1.commit();
         }
     }

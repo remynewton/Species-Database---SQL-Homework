@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.laba.solvd.Species.persistence.SpeciesRepository.java">
-    <insert id="create">
+<mapper namespace="com.laba.solvd.Species.persistence.SpeciesRepository">
+    <insert id="createSpecies">
         INSERT INTO species (common_name, scientific_name, conservation_statuses_id, families_id) VALUES (#{commonName}, #{scientificName}, #{conservationStatus.id}, #{family.id})
     </insert>
-    <update id="update">
+    <update id="updateSpecies">
         UPDATE species SET common_name = #{commonName}, scientific_name = #{scientificName}, conservation_statuses_id = #{conservationStatus.id}, families_id = #{family.id} WHERE id = #{id}
     </update>
-    <select id="findAll" resultType="com.laba.solvd.Species.persistence.SpeciesRepository">
+    <select id="findAllSpecies" resultType="com.laba.solvd.Species.persistence.SpeciesRepository">
         SELECT s.id AS species_id, s.common_name, s.scientific_name, f.name AS family_name, cs.status AS conservation_status, i.url AS image_url, h.name AS habitat_name, c.name AS characteristic_name
         FROM species.species AS s
         JOIN species.families AS f ON s.families_id = f.id
@@ -23,10 +23,10 @@
         JOIN species.species_references AS sr ON s.id = sr.species_id
         JOIN species.references AS r ON sr.reference_id = r.id
     </select>
-    <select id="findByID" resultType="com.laba.solvd.Species.domain.Species">
+    <select id="findByIDSpecies" resultType="com.laba.solvd.Species.domain.Species">
         SELECT * FROM species WHERE id = #{id}
     </select>
-    <delete id="deleteByID">
+    <delete id="deleteByIDSpecies">
         DELETE FROM species WHERE id = #{id}
     </delete>
 </mapper>

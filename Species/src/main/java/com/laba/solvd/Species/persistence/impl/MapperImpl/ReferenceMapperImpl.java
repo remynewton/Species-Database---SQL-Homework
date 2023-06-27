@@ -1,5 +1,6 @@
 package com.laba.solvd.Species.persistence.impl.MapperImpl;
 
+import com.laba.solvd.Species.domain.Characteristic;
 import com.laba.solvd.Species.domain.Reference;
 import com.laba.solvd.Species.persistence.MyBatisStarter;
 import com.laba.solvd.Species.persistence.ReferenceRepository;
@@ -13,16 +14,28 @@ public class ReferenceMapperImpl implements ReferenceRepository {
     private SqlSession sqlSession;
 
     public ReferenceMapperImpl() {
-        this.sqlSession = MyBatisStarter.getSession();
+        this.sqlSession = sqlSession;
     }
 
     @Override
     public void create(Reference reference) {
-        sqlSession.insert("create", reference);
+        try {
+            sqlSession.insert("createReference", reference);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 
     @Override
     public Optional<Reference> findByID(int id) {
-        return Optional.of(sqlSession.selectOne("findByID", id));
+        Reference obj;
+        try {
+            obj = sqlSession.selectOne("findByIDReference", id);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
+        return Optional.of(obj);
     }
 }

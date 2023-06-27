@@ -10,15 +10,18 @@ import java.io.IOException;
 
 public class MyBatisStarter {
     private static final Logger logger = Logger.getLogger("GLOBAL");
+
     private static SqlSessionFactory sqlSessionFactory;
 
-    public static SqlSession getSession() {
+    static {
         try {
-            sqlSessionFactory = new SqlSessionFactoryBuilder()
-                    .build(Resources.getResourceAsReader("mybatis-config.xml"));
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader("mybatis-config.xml"));
         } catch (IOException e) {
-            logger.error(e);
+            throw new RuntimeException(e);
         }
+    }
+
+    public static SqlSession getSession() {
         return sqlSessionFactory.openSession();
     }
 }

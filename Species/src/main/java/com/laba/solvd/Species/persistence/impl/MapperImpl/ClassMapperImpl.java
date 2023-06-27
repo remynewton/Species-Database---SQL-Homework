@@ -11,11 +11,16 @@ public class ClassMapperImpl implements ClassRepository {
     private SqlSession sqlSession;
 
     public ClassMapperImpl() {
-        this.sqlSession = MyBatisStarter.getSession();
+        this.sqlSession = sqlSession;
     }
 
     @Override
     public void create(Class oclass) {
-        sqlSession.insert("create", oclass);
+        try {
+            sqlSession.insert("createClass", oclass);
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
 }

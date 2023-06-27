@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.laba.solvd.Species.persistence.CharacteristicRepository.java">
-    <insert id="create">
+<mapper namespace="com.laba.solvd.Species.persistence.CharacteristicRepository">
+    <insert id="createCharacteristic">
         INSERT INTO characteristics (name, category) VALUES (#{name}, #{category})
     </insert>
-    <update id="update">
+    <update id="updateCharacteristic">
         UPDATE characteristics SET name = #{name}, category = #{category} WHERE id = #{id}
     </update>
-    <select id="findByCategory" resultType="com.laba.solvd.Species.domain.Characteristic">
+    <select id="findByCategoryCharacteristic" resultType="com.laba.solvd.Species.domain.Characteristic">
         SELECT id, name, category FROM characteristics WHERE category = #{category}
     </select>
-    <select id="findByID" resultType="com.laba.solvd.Species.domain.Characteristic">
+    <select id="findByIDCharacteristic" resultType="com.laba.solvd.Species.domain.Characteristic">
         SELECT id, name, category FROM characteristics WHERE id = #{id}
     </select>
-    <delete id="deleteByID">
+    <delete id="deleteByIDCharacteristic">
         DELETE FROM characteristics WHERE id = #{id}
     </delete>
 </mapper>

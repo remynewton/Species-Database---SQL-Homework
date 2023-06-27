@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.laba.solvd.Species.persistence.ImageRepository.java">
-    <insert id="create">
+<mapper namespace="com.laba.solvd.Species.persistence.ImageRepository">
+    <insert id="createImage">
         INSERT INTO images (url, format) VALUES (#{url}, #{format})
     </insert>
-    <update id="update">
+    <update id="updateImage">
         UPDATE images SET id = #{id}, url = #{url}, format = #{format} WHERE id = #{id}
     </update>
-    <select id="findByID" resultType="com.laba.solvd.Species.domain.Image">
+    <select id="findByIDImage" resultType="com.laba.solvd.Species.domain.Image">
         SELECT id, url, format FROM images WHERE id = #{id}
     </select>
 </mapper>
