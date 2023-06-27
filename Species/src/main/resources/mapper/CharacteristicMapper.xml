@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="com.laba.solvd.Species.persistence.CharacteristicRepository.java">
+    <insert id="create">
+        INSERT INTO characteristics (name, category) VALUES (#{name}, #{category})
+    </insert>
+    <update id="update">
+        UPDATE characteristics SET name = #{name}, category = #{category} WHERE id = #{id}
+    </update>
+    <select id="findByCategory" resultType="com.laba.solvd.Species.domain.Characteristic">
+        SELECT id, name, category FROM characteristics WHERE category = #{category}
+    </select>
+    <select id="findByID" resultType="com.laba.solvd.Species.domain.Characteristic">
+        SELECT id, name, category FROM characteristics WHERE id = #{id}
+    </select>
+    <delete id="deleteByID">
+        DELETE FROM characteristics WHERE id = #{id}
+    </delete>
+</mapper>

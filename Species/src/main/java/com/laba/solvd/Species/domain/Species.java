@@ -1,28 +1,41 @@
 package com.laba.solvd.Species.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.util.List;
 import java.util.Objects;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
+@JsonRootName("species")
+@XmlRootElement(name="species")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Species {
+    @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
+    @JsonProperty
     @XmlElement
     private String commonName;
+    @JsonProperty
     @XmlElement
     private String scientificName;
-    @XmlElement
+    @JsonProperty
+    @XmlElementWrapper(name="references")
+    @XmlElement(name="reference")
     private List<Reference> references;
-    @XmlElement
+    @JsonProperty
+    @XmlElementWrapper
+    @XmlElement(name="image")
     private List<Image> images;
-    @XmlElement
+    @JsonProperty
+    @XmlElementWrapper
+    @XmlElement(name="characteristic")
     private List<Characteristic> characteristics;
+    @JsonProperty
     @XmlElement
     private ConservationStatus conservationStatus;
+    @JsonProperty
     @XmlElement
     private Family family;
 
@@ -40,7 +53,7 @@ public class Species {
     public Species() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

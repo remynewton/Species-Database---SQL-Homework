@@ -1,0 +1,35 @@
+{
+  "id": 1,
+  "commonName": "Tiger",
+  "scientificName": "Panthera tigris",
+  "references": [
+    {
+      "id": 1,
+      "title": "Tigers of the World: Genomics and Conservation",
+      "author": "Shu-Jin Luo",
+      "date": "2019-02-15"
+    }
+  ],
+  "images": [
+    {
+      "id": 1,
+      "url": "https://en.wikipedia.org/wiki/Tiger#/media/File:Walking_tiger_female.jpg",
+      "format": "jpeg"
+    }
+  ],
+  "characteristics": [
+    {
+      "id": 1,
+      "name": "Stripes",
+      "category": "Fur Pattern"
+    }
+  ],
+  "conservationStatus": {
+    "id": 1,
+    "status": "Endangered"
+  },
+  "family": {
+    "id": 1,
+    "name": "Felidae"
+  }
+}

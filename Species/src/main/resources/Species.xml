@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<SpeciesList>
-    <species>
+<species>
+    <id>1</id>
+    <commonName>Tiger</commonName>
+    <scientificName>Panthera tigris</scientificName>
+    <references>
+        <reference>
+            <id>1</id>
+            <title>Tigers of the World: Genomics and Conservation</title>
+            <author>Shu-Jin Luo</author>
+            <date>2019-02-15</date>
+        </reference>
+    </references>
+    <images>
+        <image>
+            <id>1</id>
+            <url>https://en.wikipedia.org/wiki/Tiger#/media/File:Walking_tiger_female.jpg</url>
+            <format>jpeg</format>
+        </image>
+    </images>
+    <characteristics>
+        <characteristic>
+            <id>1</id>
+            <name>Stripes</name>
+            <category>Fur Pattern</category>
+        </characteristic>
+    </characteristics>
+    <conservationStatus>
         <id>1</id>
-        <commonName>Tiger</commonName>
-        <scientificName>Panthera tigris</scientificName>
-        <references>
-            <reference>
-                <id>1</id>
-                <title>Tigers of the World: Genomics and Conservation</title>
-                <author>Shu-Jin Luo</author>
-                <date>2019-02-15</date>
-            </reference>
-        </references>
-        <images>
-            <image>
-                <id>1</id>
-                <url>https://en.wikipedia.org/wiki/Tiger#/media/File:Walking_tiger_female.jpg</url>
-                <format>jpeg</format>
-            </image>
-        </images>
-        <characteristics>
-            <characteristic>
-                <id>1</id>
-                <name>Stripes</name>
-                <category>Fur Pattern</category>
-            </characteristic>
-        </characteristics>
-        <conservationStatus>
-            <id>1</id>
-            <status>Endangered</status>
-        </conservationStatus>
-        <family>
-            <id>1</id>
-            <name>Felidae</name>
-        </family>
-    </species>
-</SpeciesList>
+        <status>Endangered</status>
+    </conservationStatus>
+    <family>
+        <id>1</id>
+        <name>Felidae</name>
+    </family>
+</species>

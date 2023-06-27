@@ -15,7 +15,6 @@ import java.util.List;
 public class Handler extends DefaultHandler {
     private final Logger logger = Logger.getLogger("GLOBAL");
     private StringBuilder data;
-    private List<Species> speciesList;
     private Species species;
     private List<Reference> referencesList;
     private Reference reference;
@@ -26,17 +25,14 @@ public class Handler extends DefaultHandler {
     private ConservationStatus conservationStatus;
     private Family family;
 
-    public List<Species> getSpeciesList() {
-        return speciesList;
+    public Species getSpecies() {
+        return species;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         data = new StringBuilder();
         switch (qName) {
-            case "SpeciesList":
-                speciesList = new ArrayList<>();
-                break;
             case "species":
                 species = new Species();
                 break;
@@ -155,8 +151,6 @@ public class Handler extends DefaultHandler {
                 }
                 break;
             case "species":
-                speciesList.add(species);
-                species = null;
                 break;
             case "references":
                 if (species != null) {

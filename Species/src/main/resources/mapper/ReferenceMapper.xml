@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="com.laba.solvd.Species.persistence.ReferenceRepository.java">
+    <insert id="create">
+        INSERT INTO references (title, author, date) VALUES (#{title}, #{author}, #{date})
+    </insert>
+    <select id="findByID" resultType="com.laba.solvd.Species.domain.Reference">
+        SELECT id, title, author, year FROM references WHERE id = #{id}
+    </select>
+</mapper>

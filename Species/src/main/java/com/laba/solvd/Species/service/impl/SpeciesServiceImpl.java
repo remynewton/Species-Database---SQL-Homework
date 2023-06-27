@@ -5,6 +5,8 @@ import com.laba.solvd.Species.domain.Image;
 import com.laba.solvd.Species.domain.Reference;
 import com.laba.solvd.Species.domain.Species;
 import com.laba.solvd.Species.persistence.SpeciesRepository;
+import com.laba.solvd.Species.persistence.impl.MapperImpl.ReferenceMapperImpl;
+import com.laba.solvd.Species.persistence.impl.MapperImpl.SpeciesMapperImpl;
 import com.laba.solvd.Species.persistence.impl.SpeciesRepositoryImpl;
 import com.laba.solvd.Species.service.CharacteristicService;
 import com.laba.solvd.Species.service.ImageService;
@@ -21,7 +23,8 @@ public class SpeciesServiceImpl implements SpeciesService {
     private final ImageService imagesService;
 
     public SpeciesServiceImpl() {
-        this.speciesRepository = new SpeciesRepositoryImpl();
+        // this.speciesRepository = new SpeciesRepositoryImpl();
+        this.speciesRepository = new SpeciesMapperImpl();
         this.referenceService = new ReferenceServiceImpl();
         this.characteristicsService = new CharacteristicServiceImpl();
         this.imagesService = new ImageServiceImpl();

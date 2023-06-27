@@ -29,7 +29,7 @@ public class ReferenceRepositoryImpl implements ReferenceRepository {
         try {
             connection = CONNECTION_POOL.getConnection();
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO references (title, author, year) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "INSERT INTO references (title, author, date) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, reference.getTitle());
             ps.setString(2, reference.getAuthor());
             ps.setDate(3, (Date) reference.getDate());

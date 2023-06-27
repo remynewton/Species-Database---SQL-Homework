@@ -1,20 +1,25 @@
 package com.laba.solvd.Species.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Reference {
-    @XmlElement
+    @JsonProperty
+    @XmlElement(name="id")
     private int id;
-    @XmlElement
+    @JsonProperty
+    @XmlElement(name="title")
     private String title;
+    @JsonProperty
     @XmlElement
     private String author;
+    @JsonProperty
     @XmlElement
     private Date date;
 
@@ -28,7 +33,7 @@ public class Reference {
     public Reference() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

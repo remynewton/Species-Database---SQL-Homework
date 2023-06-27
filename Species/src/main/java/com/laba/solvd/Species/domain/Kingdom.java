@@ -1,6 +1,8 @@
 package com.laba.solvd.Species.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,10 +12,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Kingdom {
+    @JsonProperty
     @XmlElement
     private int id;
+    @JsonProperty
     @XmlElement
     private String name;
+    @JsonProperty
     @XmlElement
     private List<Class> classes;
 

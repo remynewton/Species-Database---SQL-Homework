@@ -45,18 +45,18 @@ public class SAX_Parser implements Parser {
     }
 
     @Override
-    public List<Species> parse(File file) {
-        List<Species> speciesList = null;
+    public Species parse(File file) {
+        Species species = null;
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
             Handler handler = new Handler();
             parser.parse(file, handler);
-            speciesList = handler.getSpeciesList();
+            species = handler.getSpecies();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             logger.error(e);
         }
-        return speciesList;
+        return species;
     }
 
     private static class CustomErrorHandler implements ErrorHandler {

@@ -6,5 +6,5 @@ import java.io.File;
 import java.util.List;
 
 public interface Parser {
-    List<Species> parse(File file);
+    Species parse(File file);
 }

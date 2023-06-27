@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="com.laba.solvd.Species.persistence.ImageRepository.java">
+    <insert id="create">
+        INSERT INTO images (url, format) VALUES (#{url}, #{format})
+    </insert>
+    <update id="update">
+        UPDATE images SET id = #{id}, url = #{url}, format = #{format} WHERE id = #{id}
+    </update>
+    <select id="findByID" resultType="com.laba.solvd.Species.domain.Image">
+        SELECT id, url, format FROM images WHERE id = #{id}
+    </select>
+</mapper>
