@@ -16,7 +16,6 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image create(Image image) {
-        image.setId(null);
         imagesRepository.create(image);
         return image;
     }

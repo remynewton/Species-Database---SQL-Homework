@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class Reference {
     @JsonProperty
     @XmlElement(name="id")
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement(name="title")
     private String title;
@@ -23,7 +23,7 @@ public class Reference {
     @XmlElement
     private Date date;
 
-    public Reference(int id, String title, String author, Date date) {
+    public Reference(Integer id, String title, String author, Date date) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -33,7 +33,7 @@ public class Reference {
     public Reference() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

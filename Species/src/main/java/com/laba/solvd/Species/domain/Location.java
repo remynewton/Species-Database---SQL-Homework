@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Location {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String name;
@@ -27,7 +27,7 @@ public class Location {
     @XmlElement
     private List<Species> species;
 
-    public Location(int id, String name, double longitude, double latitude, List<Species> species) {
+    public Location(Integer id, String name, double longitude, double latitude, List<Species> species) {
         this.id = id;
         this.name = name;
         this.longitude = longitude;
@@ -38,7 +38,7 @@ public class Location {
     public Location() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

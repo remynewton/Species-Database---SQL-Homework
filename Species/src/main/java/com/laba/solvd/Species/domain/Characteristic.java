@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Characteristic {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String name;
@@ -20,21 +20,13 @@ public class Characteristic {
     @XmlElement
     private String category;
 
-    public Characteristic(int id, String name, String category) {
+    public Characteristic(Integer id, String name, String category) {
         this.id = id;
         this.name = name;
         this.category = category;
     }
 
     public Characteristic() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -51,6 +43,14 @@ public class Characteristic {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

@@ -11,11 +11,12 @@ public class KingdomMapperImpl implements KingdomRepository {
     private SqlSession sqlSession;
 
     public KingdomMapperImpl() {
-        this.sqlSession = sqlSession;
+        this.sqlSession = MyBatisStarter.getSession();
     }
 
     @Override
     public void create(Kingdom kingdom) {
+        sqlSession = MyBatisStarter.getSession();
         try {
             sqlSession.insert("createKingdom", kingdom);
             sqlSession.commit();

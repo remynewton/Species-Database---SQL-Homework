@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Image {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String url;
@@ -20,7 +20,7 @@ public class Image {
     @XmlElement
     private String format;
 
-    public Image(int id, String url, String format) {
+    public Image(Integer id, String url, String format) {
         this.id = id;
         this.url = url;
         this.format = format;
@@ -29,7 +29,7 @@ public class Image {
     public Image() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

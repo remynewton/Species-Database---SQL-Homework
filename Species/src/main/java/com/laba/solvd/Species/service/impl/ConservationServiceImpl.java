@@ -15,7 +15,6 @@ public class ConservationServiceImpl implements ConservationService {
 
     @Override
     public ConservationStatus create(ConservationStatus conservationStatus) {
-        conservationStatus.setId(null);
         conservationStatusRepository.create(conservationStatus);
         return conservationStatus;
     }

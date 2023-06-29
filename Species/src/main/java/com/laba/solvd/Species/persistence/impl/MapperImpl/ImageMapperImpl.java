@@ -13,11 +13,12 @@ public class ImageMapperImpl implements ImageRepository {
     private SqlSession sqlSession;
 
     public ImageMapperImpl() {
-        this.sqlSession = sqlSession;
+        this.sqlSession = MyBatisStarter.getSession();
     }
 
     @Override
     public void create(Image image) {
+        sqlSession = MyBatisStarter.getSession();
         try {
             sqlSession.insert("createImage", image);
             sqlSession.commit();
@@ -28,6 +29,7 @@ public class ImageMapperImpl implements ImageRepository {
 
     @Override
     public void update(Image image) {
+        sqlSession = MyBatisStarter.getSession();
         try {
             sqlSession.update("updateImage", image);
             sqlSession.commit();
@@ -38,6 +40,7 @@ public class ImageMapperImpl implements ImageRepository {
 
     @Override
     public Optional<Image> findByID(int id) {
+        sqlSession = MyBatisStarter.getSession();
         Image obj;
         try {
             obj = sqlSession.selectOne("findByIDImage", id);

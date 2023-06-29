@@ -16,7 +16,6 @@ public class HabitatServiceImpl implements HabitatService {
 
     @Override
     public void create(Habitat habitats) {
-        habitats.setId(null);
         habitatsRepository.create(habitats);
     }
 }

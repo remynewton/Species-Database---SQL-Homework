@@ -6,6 +6,7 @@ import com.laba.solvd.Species.persistence.impl.MapperImpl.SpeciesMapperImpl;
 import com.laba.solvd.Species.service.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SpeciesServiceImpl implements SpeciesService {
@@ -26,7 +27,6 @@ public class SpeciesServiceImpl implements SpeciesService {
 
     @Override
     public void create(Species species) {
-        species.setId(0);
         speciesRepository.create(species);
         if (species.getReferences() != null) {
             List<Reference> references = species.getReferences().stream()
@@ -61,5 +61,10 @@ public class SpeciesServiceImpl implements SpeciesService {
     @Override
     public List<Species> findAll() {
         return speciesRepository.findAll();
+    }
+
+    @Override
+    public Species findById(int id) {
+        return speciesRepository.findByID(id);
     }
 }

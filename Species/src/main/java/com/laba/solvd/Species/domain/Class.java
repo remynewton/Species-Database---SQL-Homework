@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Class {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String name;
@@ -21,7 +21,7 @@ public class Class {
     @XmlElement
     private List<Family> families;
 
-    public Class(int id, String name, List<Family> families) {
+    public Class(Integer id, String name, List<Family> families) {
         this.id = id;
         this.name = name;
         this.families = families;
@@ -30,7 +30,7 @@ public class Class {
     public Class() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

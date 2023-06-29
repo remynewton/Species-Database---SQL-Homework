@@ -16,7 +16,6 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public void create(Class oclass) {
-        oclass.setId(null);
         classesRepository.create(oclass);
     }
 }

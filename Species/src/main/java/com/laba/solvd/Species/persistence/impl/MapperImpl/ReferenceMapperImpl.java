@@ -14,11 +14,12 @@ public class ReferenceMapperImpl implements ReferenceRepository {
     private SqlSession sqlSession;
 
     public ReferenceMapperImpl() {
-        this.sqlSession = sqlSession;
+        this.sqlSession = MyBatisStarter.getSession();
     }
 
     @Override
     public void create(Reference reference) {
+        sqlSession = MyBatisStarter.getSession();
         try {
             sqlSession.insert("createReference", reference);
             sqlSession.commit();
@@ -29,6 +30,7 @@ public class ReferenceMapperImpl implements ReferenceRepository {
 
     @Override
     public Optional<Reference> findByID(int id) {
+        sqlSession = MyBatisStarter.getSession();
         Reference obj;
         try {
             obj = sqlSession.selectOne("findByIDReference", id);

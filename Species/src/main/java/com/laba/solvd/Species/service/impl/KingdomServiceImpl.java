@@ -16,7 +16,6 @@ public class KingdomServiceImpl implements KingdomService {
 
     @Override
     public void create(Kingdom kingdom) {
-        kingdom.setId(null);
         kingdomsRepository.create(kingdom);
     }
 }

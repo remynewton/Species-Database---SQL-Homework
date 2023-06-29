@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Habitat {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String name;
@@ -21,7 +21,7 @@ public class Habitat {
     @XmlElement
     private List<Location> locations;
 
-    public Habitat(int id, String name, List<Location> locations) {
+    public Habitat(Integer id, String name, List<Location> locations) {
         this.id = id;
         this.name = name;
         this.locations = locations;
@@ -30,20 +30,20 @@ public class Habitat {
     public Habitat() {
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public List<Location> getLocations() {
         return locations;
     }
 
     public void setLocations(List<Location> locations) {
         this.locations = locations;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

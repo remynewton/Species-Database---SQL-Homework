@@ -16,7 +16,6 @@ public class ReferenceServiceImpl implements ReferenceService {
 
     @Override
     public Reference create(Reference reference) {
-        reference.setId(null);
         referencesRepository.create(reference);
         return reference;
     }

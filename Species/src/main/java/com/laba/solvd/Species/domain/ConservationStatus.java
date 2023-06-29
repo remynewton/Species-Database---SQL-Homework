@@ -12,12 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ConservationStatus {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String status;
 
-    public ConservationStatus(int id, String status) {
+    public ConservationStatus(Integer id, String status) {
         this.id = id;
         this.status = status;
     }
@@ -25,7 +25,7 @@ public class ConservationStatus {
     public ConservationStatus() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

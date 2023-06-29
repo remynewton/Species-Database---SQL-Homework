@@ -11,11 +11,12 @@ public class HabitatMapperImpl implements HabitatRepository {
     private SqlSession sqlSession;
 
     public HabitatMapperImpl() {
-        this.sqlSession = sqlSession;
+        this.sqlSession = MyBatisStarter.getSession();
     }
 
     @Override
     public void create(Habitat habitats) {
+        sqlSession = MyBatisStarter.getSession();
         try {
             sqlSession.insert("createHabitat", habitats);
             sqlSession.commit();

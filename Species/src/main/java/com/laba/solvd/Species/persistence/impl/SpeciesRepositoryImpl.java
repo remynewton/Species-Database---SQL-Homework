@@ -93,21 +93,20 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
     }
 
     @Override
-    public Optional<Species> findByID(int ID) {
-        Optional<Species> optionalSpecies = Optional.empty();
+    public Species findByID(int ID) {
         String sql = "SELECT * FROM species WHERE id = ?";
         Connection connection = null;
+        Species species = null;
         try {
             connection = CONNECTION_POOL.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, ID);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Species species = new Species();
+                    species = new Species();
                     species.setId(rs.getInt("id"));
                     species.setCommonName(rs.getString("common_name"));
                     species.setScientificName(rs.getString("scientific_name"));
-                    optionalSpecies = Optional.of(species);
                 }
             }
             ps.close();
@@ -116,7 +115,7 @@ public class SpeciesRepositoryImpl implements SpeciesRepository {
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
-        return optionalSpecies;
+        return species;
     }
 
     @Override

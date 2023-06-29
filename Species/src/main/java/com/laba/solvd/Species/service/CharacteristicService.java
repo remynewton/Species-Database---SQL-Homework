@@ -2,9 +2,9 @@ package com.laba.solvd.Species.service;
 
 import com.laba.solvd.Species.domain.Characteristic;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface CharacteristicService {
     Characteristic create (Characteristic characteristics);
-    Optional<Characteristic> findByCategory(String category);
+    List<Characteristic> findByCategory(String category);
 }

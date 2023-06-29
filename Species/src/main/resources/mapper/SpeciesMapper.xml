@@ -9,24 +9,18 @@
         UPDATE species SET common_name = #{commonName}, scientific_name = #{scientificName}, conservation_statuses_id = #{conservationStatus.id}, families_id = #{family.id} WHERE id = #{id}
     </update>
     <select id="findAllSpecies" resultType="com.laba.solvd.Species.persistence.SpeciesRepository">
-        SELECT s.id AS species_id, s.common_name, s.scientific_name, f.name AS family_name, cs.status AS conservation_status, i.url AS image_url, h.name AS habitat_name, c.name AS characteristic_name
-        FROM species.species AS s
-        JOIN species.families AS f ON s.families_id = f.id
-        JOIN species.conservation_statuses AS cs ON s.conservation_statuses_id = cs.id
-        LEFT JOIN species.species_images AS si ON s.id = si.species_species_id
-        LEFT JOIN species.images AS i ON si.image_id = i.id
-        LEFT JOIN species.species_locations AS sl ON s.id = sl.species
-        LEFT JOIN species.locations AS l ON sl.location_id = l.id
-        LEFT JOIN species.habitats AS h ON l.habitats_id = h.id
-        LEFT JOIN species.species_characteristics AS sc ON s.id = sc.species_id
-        LEFT JOIN species.characteristics AS c ON sc.characteristic_id = c.id
-        JOIN species.species_references AS sr ON s.id = sr.species_id
-        JOIN species.references AS r ON sr.reference_id = r.id
+        SELECT id, common_name, scientific_name FROM species;
     </select>
     <select id="findByIDSpecies" resultType="com.laba.solvd.Species.domain.Species">
-        SELECT * FROM species WHERE id = #{id}
+        SELECT id, common_name, scientific_name FROM species WHERE id = #{id}
     </select>
     <delete id="deleteByIDSpecies">
         DELETE FROM species WHERE id = #{id}
     </delete>
+    <update id="setCharacteristic" parameterType="map">
+        INSERT INTO species_characteristics (species_id, characteristic_id) VALUES (#{species.id}, #{characteristic.id})
+    </update>
+    <update id="setConservationStatus" parameterType="map">
+        UPDATE species SET conservation_statuses_id = #{conservationStatus.id} where id = #{species.id}
+    </update>
 </mapper>

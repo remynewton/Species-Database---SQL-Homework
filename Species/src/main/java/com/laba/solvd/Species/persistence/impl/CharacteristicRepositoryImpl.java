@@ -1,7 +1,6 @@
 package com.laba.solvd.Species.persistence.impl;
 
 import com.laba.solvd.Species.domain.Characteristic;
-import com.laba.solvd.Species.domain.Image;
 import com.laba.solvd.Species.persistence.CharacteristicRepository;
 import com.laba.solvd.Species.persistence.ConnectionPool;
 import org.apache.log4j.Logger;
@@ -64,8 +63,8 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
     }
 
     @Override
-    public Optional<Characteristic> findByCategory(String category) {
-        Characteristic characteristic = null;
+    public List<Characteristic> findByCategory(String category) {
+        List<Characteristic> characteristics = new ArrayList<>();
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -73,11 +72,12 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
                     "SELECT id, name, category FROM characteristics WHERE category = ?");
             ps.setString(1, category);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                characteristic = new Characteristic();
+            while (rs.next()) {
+                Characteristic characteristic = new Characteristic();
                 characteristic.setId(rs.getInt("id"));
                 characteristic.setName(rs.getString("name"));
                 characteristic.setCategory(rs.getString("category"));
+                characteristics.add(characteristic);
             }
             rs.close();
             ps.close();
@@ -86,8 +86,7 @@ public class CharacteristicRepositoryImpl implements CharacteristicRepository {
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
-        assert characteristic != null;
-        return Optional.of(characteristic);
+        return characteristics;
     }
 
     @Override

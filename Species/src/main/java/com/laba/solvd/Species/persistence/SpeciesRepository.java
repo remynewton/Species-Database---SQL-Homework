@@ -1,18 +1,18 @@
 package com.laba.solvd.Species.persistence;
 
 import com.laba.solvd.Species.domain.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
-
 public interface SpeciesRepository {
     void create (Species species);
     List<Species> findAll();
-    Optional<Species> findByID(int ID);
+    Species findByID(int ID);
     void update (Species species);
     void deleteByID (int id);
-    void setReference(Species species, Reference reference);
-    void setCharacteristic(Species species, Characteristic characteristic);
-    void setImage(Species species, Image image);
-    void setConservationStatus(Species species, ConservationStatus conservationStatus);
+    void setReference(@Param("species") Species species, @Param("reference") Reference reference);
+    void setCharacteristic(@Param("species") Species species, @Param("characteristic") Characteristic characteristic);
+    void setImage(@Param("species") Species species, @Param("image") Image image);
+    void setConservationStatus(@Param("species") Species species, @Param("conservationStatus") ConservationStatus conservationStatus);
 }

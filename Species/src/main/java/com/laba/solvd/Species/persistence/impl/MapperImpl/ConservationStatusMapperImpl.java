@@ -2,6 +2,7 @@ package com.laba.solvd.Species.persistence.impl.MapperImpl;
 
 import com.laba.solvd.Species.domain.ConservationStatus;
 import com.laba.solvd.Species.persistence.ConservationStatusRepository;
+import com.laba.solvd.Species.persistence.MyBatisStarter;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
@@ -10,11 +11,12 @@ public class ConservationStatusMapperImpl implements ConservationStatusRepositor
     private SqlSession sqlSession;
 
     public ConservationStatusMapperImpl() {
-        this.sqlSession = sqlSession;
+        this.sqlSession = MyBatisStarter.getSession();
     }
 
     @Override
     public void create(ConservationStatus conservationStatus) {
+        sqlSession = MyBatisStarter.getSession();
         try {
             sqlSession.insert("createConservationStatus", conservationStatus);
             sqlSession.commit();

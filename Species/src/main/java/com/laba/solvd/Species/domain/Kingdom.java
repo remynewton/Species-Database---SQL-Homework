@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Kingdom {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String name;
@@ -22,7 +22,7 @@ public class Kingdom {
     @XmlElement
     private List<Class> classes;
 
-    public Kingdom(int id, String name, List<Class> classes) {
+    public Kingdom(Integer id, String name, List<Class> classes) {
         this.id = id;
         this.name = name;
         this.classes = classes;
@@ -31,7 +31,7 @@ public class Kingdom {
     public Kingdom() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
 public class Species {
     @JsonProperty
     @XmlElement
-    private int id;
+    private Integer id;
     @JsonProperty
     @XmlElement
     private String commonName;
@@ -39,7 +39,7 @@ public class Species {
     @XmlElement
     private Family family;
 
-    public Species(int id, String commonName, String scientificName, List<Reference> references, List<Image> images, List<Characteristic> characteristics, ConservationStatus conservationStatus, Family family) {
+    public Species(Integer id, String commonName, String scientificName, List<Reference> references, List<Image> images, List<Characteristic> characteristics, ConservationStatus conservationStatus, Family family) {
         this.id = id;
         this.commonName = commonName;
         this.scientificName = scientificName;
@@ -53,14 +53,13 @@ public class Species {
     public Species() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getCommonName() {
         return commonName;
     }
