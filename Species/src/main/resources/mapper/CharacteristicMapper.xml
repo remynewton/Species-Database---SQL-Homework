@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.laba.solvd.Species.persistence.CharacteristicRepository">
     <insert id="createCharacteristic">
-        INSERT INTO characteristics (name, category) VALUES (#{name}, #{category})
+        INSERT INTO characteristics (id, name, category) VALUES (#{id}, #{name}, #{category})
     </insert>
     <update id="updateCharacteristic">
         UPDATE characteristics SET name = #{name}, category = #{category} WHERE id = #{id}

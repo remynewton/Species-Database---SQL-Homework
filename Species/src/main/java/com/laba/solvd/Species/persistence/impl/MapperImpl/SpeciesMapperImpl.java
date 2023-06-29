@@ -14,7 +14,6 @@ public class SpeciesMapperImpl implements SpeciesRepository {
     private SqlSession sqlSession;
 
     public SpeciesMapperImpl() {
-        this.sqlSession = MyBatisStarter.getSession();
     }
 
     @Override

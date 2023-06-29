@@ -13,6 +13,9 @@ public class MyBatisStarter {
 
     private static SqlSessionFactory sqlSessionFactory;
 
+    public MyBatisStarter() {
+    }
+
     static {
         try {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader("mybatis-config.xml"));
