@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.laba.solvd.Species.persistence.SpeciesRepository">
-    <insert id="createSpecies">
+    <insert id="createSpecies" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
             INSERT INTO species (id, common_name, scientific_name, conservation_statuses_id, families_id) VALUES (#{id}, #{commonName}, #{scientificName}, #{conservationStatus.id}, #{family.id})
     </insert>
     <update id="updateSpecies">
@@ -29,9 +29,9 @@
     <delete id="deleteByIDSpecies">
         DELETE FROM species WHERE id = #{id}
     </delete>
-    <update id="setCharacteristic" parameterType="map">
+    <insert id="setCharacteristic" parameterType="map">
         INSERT INTO species_characteristics (species_id, characteristic_id) VALUES (#{species.id}, #{characteristic.id})
-    </update>
+    </insert>
     <update id="setConservationStatus" parameterType="map">
         UPDATE species SET conservation_statuses_id = #{conservationStatus.id} where id = #{species.id}
     </update>

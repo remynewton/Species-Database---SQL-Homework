@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.laba.solvd.Species.persistence.ReferenceRepository">
-    <insert id="createReference">
+    <insert id="createReference" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO references (title, author, date) VALUES (#{title}, #{author}, #{date})
     </insert>
     <select id="findByIDReference" resultType="com.laba.solvd.Species.domain.Reference">

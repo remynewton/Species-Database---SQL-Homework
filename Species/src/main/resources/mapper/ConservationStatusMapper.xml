@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.laba.solvd.Species.persistence.ConservationStatusRepository">
-    <insert id="createConservationStatus">
+    <insert id="createConservationStatus" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO conservation_statuses (status) VALUES (#{status})
     </insert>
 </mapper>

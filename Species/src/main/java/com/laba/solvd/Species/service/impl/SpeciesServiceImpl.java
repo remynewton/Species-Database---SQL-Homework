@@ -27,6 +27,7 @@ public class SpeciesServiceImpl implements SpeciesService {
 
     @Override
     public void create(Species species) {
+        species.setId(null);
         speciesRepository.create(species);
         if (species.getReferences() != null) {
             List<Reference> references = species.getReferences().stream()

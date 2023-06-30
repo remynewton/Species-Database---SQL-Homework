@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.laba.solvd.Species.persistence.CharacteristicRepository">
-    <insert id="createCharacteristic">
+    <insert id="createCharacteristic" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO characteristics (id, name, category) VALUES (#{id}, #{name}, #{category})
     </insert>
     <update id="updateCharacteristic">
